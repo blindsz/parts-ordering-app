@@ -6,7 +6,7 @@
 @stop
 
 @section('content')
-    <h1>hellow</h1>
+    <h1>Orders Page</h1>
 @stop
 
 @section('js')

@@ -11,19 +11,22 @@
 |
 */
 
-Route::get('/', array('as' => 'login', function(){
-    return View::make('login.index');
-}));
+Route::get('/', [
+	'uses' => 'LoginController@index', 
+	'as' => 'login'
+]);
 
+Route::get('/orders', [
+	'uses' => 'OrdersController@index', 
+	'as' => 'orders'
+]);
 
-Route::get('/orders', array('as' => 'orders', function(){
-    return View::make('orders.index');
-}));
+Route::get('/departments', [
+	'uses' => 'DepartmentsController@index', 
+	'as' => 'departments'
+]);
 
-Route::get('/departments', array('as' => 'departments', function(){
-    return View::make('departments/index');
-}));
-
-Route::get('/users', array('as' => 'users', function(){
-    return View::make('users/index');
-}));
+Route::get('/users', [
+	'uses' => 'UsersController@index', 
+	'as' => 'users'
+]);

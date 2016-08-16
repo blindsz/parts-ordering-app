@@ -17,6 +17,7 @@
                 <section class="content">
                     <div class="row">
                         @yield('content')
+                        <?php //print_r(PDO::getAvailableDrivers()); ?>
                     </div>
                 </section>
             </div>
