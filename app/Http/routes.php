@@ -11,6 +11,19 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', array('as' => 'login', function(){
+    return View::make('login.index');
+}));
+
+
+Route::get('/orders', array('as' => 'orders', function(){
+    return View::make('orders.index');
+}));
+
+Route::get('/departments', array('as' => 'departments', function(){
+    return View::make('departments/index');
+}));
+
+Route::get('/users', array('as' => 'users', function(){
+    return View::make('users/index');
+}));
