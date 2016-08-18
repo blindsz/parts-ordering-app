@@ -11,20 +11,86 @@
 |
 */
 
+
+/*
+|--------------------------------------------------------------------------
+| Login Routes
+|--------------------------------------------------------------------------
+*/
+
 Route::get('/', [
 	'uses' => 'LoginController@index', 
 	'as' => 'login'
 ]);
+
+/*
+|--------------------------------------------------------------------------
+| Orders Routes
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/orders', [
 	'uses' => 'OrdersController@index', 
 	'as' => 'orders'
 ]);
 
+/*
+|--------------------------------------------------------------------------
+| Departments Routes
+|--------------------------------------------------------------------------
+*/
+
 Route::get('/departments', [
 	'uses' => 'DepartmentsController@index', 
 	'as' => 'departments'
 ]);
+
+Route::get('/departments/departments_get', [
+	'uses' => 'DepartmentsController@departments_get', 
+	'as' => 'get_all_departments'
+]);
+
+Route::get('/departments/department_get/{id}', [
+	'uses' => 'DepartmentsController@department_get', 
+	'as' => 'get_department_by_id'
+]);
+
+Route::post('/departments/department_post',[
+	'uses' => 'DepartmentsController@department_post', 
+	'as' => 'add_new_department'
+]);
+
+/*
+|--------------------------------------------------------------------------
+| Sub-Departments Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/sub-departments', [
+	'uses' => 'SubDepartmentsController@index', 
+	'as' => 'sub_departments'
+]);
+
+Route::get('/sub-departments/sub_departments_get', [
+	'uses' => 'SubDepartmentsController@sub_departments_get', 
+	'as' => 'get_all_sub_departments'
+]);
+
+Route::get('/sub-departments/sub_department_get/{id}', [
+	'uses' => 'SubDepartmentsController@sub_department_get', 
+	'as' => 'get_sub_department_by_id'
+]);
+
+Route::post('/sub-departments/sub_department_post', [
+	'uses' => 'SubDepartmentsController@sub_department_post', 
+	'as' => 'add_new_sub_department'
+]);
+
+/*
+|--------------------------------------------------------------------------
+| Users Routes
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/users', [
 	'uses' => 'UsersController@index', 

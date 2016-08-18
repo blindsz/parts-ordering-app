@@ -2,14 +2,15 @@
 
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder {
+class SubDepartmentsTableSeeder extends Seeder {
     /**
      * Run the database seeds.
      *
      * @return void
      */
     public function run() {
-        $this->call(DepartmentsTableSeeder::class);
-        $this->call(SubDepartmentsTableSeeder::class);
+
+        //
+
     }
 }

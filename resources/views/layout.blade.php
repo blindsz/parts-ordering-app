@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Parts Ordering System</title>
+        <title>Parts Ordering App</title>
             @include("_shared/css")
             @yield('css')
     </head>
@@ -17,7 +17,6 @@
                 <section class="content">
                     <div class="row">
                         @yield('content')
-                        <?php //print_r(PDO::getAvailableDrivers()); ?>
                     </div>
                 </section>
             </div>

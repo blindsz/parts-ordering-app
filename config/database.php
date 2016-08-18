@@ -26,6 +26,7 @@ return [
     |
     */
 
+    // 'default' => env('DB_CONNECTION', 'mysql'),
     'default' => env('DB_CONNECTION', 'mysql'),
 
     /*
@@ -78,6 +79,14 @@ return [
             'schema' => 'public',
         ],
 
+        'sqlsrv' => [
+            'driver' => 'sqlsrv',
+            'host' => 'JAREDJAN', // Provide IP address here
+            'database' => 'parts_ordering_app',
+            'username' => 'root',
+            'password' => '',
+            'prefix' => '',
+        ],
     ],
 
     /*

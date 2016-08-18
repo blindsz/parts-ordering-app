@@ -6,7 +6,7 @@
 @stop
 
 @section('content')
-   <h1> Users Page </h1>
+    <h1>Sub Departments Page</h1>
 @stop
 
 @section('js')
