@@ -13,15 +13,15 @@ class SubDepartmentsController extends Controller {
     	return view('sub-departments.index');
     }
 
-    public function sub_departments_get() {
+    public function sub_departments_get(Request $request) {
     	return SubDepartment::all();
     }
 
-    public function sub_department_get($id){
+    public function sub_department_get(Request $request, $id){
     	return $id;
     }
 
-    public function sub_department_post(){
+    public function sub_department_post(Request $request){
     	
     }
 }

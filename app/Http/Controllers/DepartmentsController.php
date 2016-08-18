@@ -14,11 +14,11 @@ class DepartmentsController extends Controller {
     	return view('departments.index');
     }
     
-    public function departments_get() {
+    public function departments_get(Request $request) {
     	return Department::all();
     }
 
-    public function department_get($id) {
+    public function department_get(Request $request, $id) {
     	return $id;
     }
 
