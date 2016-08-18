@@ -8,7 +8,7 @@ use App\Http\Requests;
 use App\SubDepartment;
 
 class SubDepartmentsController extends Controller {
-	
+
     public function index() {
     	return view('sub-departments.index');
     }
