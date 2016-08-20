@@ -4913,3 +4913,9 @@ table.text-center th {
     white-space: normal !important;
   }
 }
+
+.with-no-border-top{
+  border: 1px solid #d2d6de;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+  padding:6px;
+}

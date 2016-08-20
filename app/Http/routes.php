@@ -60,6 +60,7 @@ Route::post('/departments/department_post',[
 	'as' => 'add_new_department'
 ]);
 
+
 /*
 |--------------------------------------------------------------------------
 | Sub-Departments Routes
@@ -84,6 +85,16 @@ Route::get('/sub-departments/sub_department_get/{id}', [
 Route::post('/sub-departments/sub_department_post', [
 	'uses' => 'SubDepartmentsController@sub_department_post', 
 	'as' => 'add_new_sub_department'
+]);
+
+Route::put('/sub-departments/sub_department_put/{id}', [
+	'uses' => 'SubDepartmentsController@sub_department_put', 
+	'as' => 'update_sub_department'
+]);
+
+Route::delete('/sub-departments/sub_department_delete/{id}', [
+	'uses' => 'SubDepartmentsController@sub_department_delete', 
+	'as' => 'delete_sub_department'
 ]);
 
 /*

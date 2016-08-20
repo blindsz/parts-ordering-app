@@ -6,6 +6,9 @@
 
 
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+.error{
+  color:red;
+}
 
 html {
     font-family: sans-serif;
@@ -305,11 +308,6 @@ th {
     }
 }
 
-@font-face {
-    font-family: 'Glyphicons Halflings';
-    src: url(../fonts/glyphicons-halflings-regular.eot);
-    src: url(../fonts/glyphicons-halflings-regular.eot?#iefix) format('embedded-opentype'), url(../fonts/glyphicons-halflings-regular.woff2) format('woff2'), url(../fonts/glyphicons-halflings-regular.woff) format('woff'), url(../fonts/glyphicons-halflings-regular.ttf) format('truetype'), url(../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular) format('svg')
-}
 
 .glyphicon {
     position: relative;
@@ -7144,9 +7142,11 @@ button.close {
 }
 
 .modal-header {
+    background-color: #3c8dbc;
+    color: #ffffff;
     min-height: 16.43px;
     padding: 15px;
-    border-bottom: 1px solid #e5e5e5
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .modal-header .close {

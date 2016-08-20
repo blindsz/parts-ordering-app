@@ -4,6 +4,16 @@
 
     };
 
+    var global= {
+        DOM: {
+            
+        },
+
+        table: {
+            
+        }
+    };
+
     var controller = {
         init: function () {
             var self = this;
@@ -11,7 +21,7 @@
 	    }
     };
 
-    var presidentsView = {
+    var indexView = {
     	init: function () {
     		
 
