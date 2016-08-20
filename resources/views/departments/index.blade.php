@@ -35,7 +35,11 @@
 						<button type="button" class="btn btn-default" id="btn_refresh_department_list"><span class="glyphicon glyphicon-refresh"></span></button>
                         <button type="button" class="btn btn-primary" id="btn_assign_sub_departments"><span class="glyphicon glyphicon-list-alt"></span> Assign Sub-Departments</button>
                     </div>
+                    <!-- <div class="overlay">
+                        <i class="fa fa-refresh fa-spin"></i>
+                    </div> -->
                 </div>
+                
             </div>
     	</div>
     </section>
