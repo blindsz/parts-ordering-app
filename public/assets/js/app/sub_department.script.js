@@ -19,7 +19,7 @@
             return deferred.promise();
         },
 
-        add: function (newData) {
+        post: function (newData) {
             var deferred = $.Deferred();
             $.post(BASE_URL + CURRENT_ROUTE + "/sub_department_post",{
                 newData: newData,
@@ -173,7 +173,7 @@
                             description: self.$txtNewSubDepartmentDescription.val()
                         };
 
-                        model.add(data).done(function (insertedId) {
+                        model.post(data).done(function (insertedId) {
                             model.get(insertedId).done(function (insertedData){
                                 indexView.$dtSubDepartment.row.add([
                                     insertedData.id,

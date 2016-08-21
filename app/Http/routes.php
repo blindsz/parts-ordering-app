@@ -82,6 +82,11 @@ Route::get('/sub-departments/sub_department_get/{id}', [
 	'as' => 'get_sub_department_by_id'
 ]);
 
+Route::get('/sub-departments/sub_department_get_by_ids/{id}', [
+	'uses' => 'SubDepartmentsController@sub_department_get_by_ids', 
+	'as' => 'get_sub_department_by_ids'
+]);
+
 Route::post('/sub-departments/sub_department_post', [
 	'uses' => 'SubDepartmentsController@sub_department_post', 
 	'as' => 'add_new_sub_department'

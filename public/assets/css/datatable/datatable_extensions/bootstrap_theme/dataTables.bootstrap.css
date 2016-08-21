@@ -59,7 +59,12 @@ div.dataTables_paginate ul.pagination {
 		margin-bottom: 0.5em;
 	}
 }
-
+table.dataTable td{
+    max-width: 70px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
 
 table.dataTable td,
 table.dataTable th {

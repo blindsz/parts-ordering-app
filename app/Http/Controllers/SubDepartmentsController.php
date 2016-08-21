@@ -24,9 +24,16 @@ class SubDepartmentsController extends Controller {
         }
         else{
             return array('status'=> '0');
-
         }
-    	
+    }
+
+    public function sub_department_get_by_ids(Request $request, $id){
+        if(SubDepartment::find($id)){
+            return SubDepartment::find(explode(",", $id));
+        }
+        else{
+            return array('status'=> '0');
+        }
     }
 
     public function sub_department_post(Request $request){

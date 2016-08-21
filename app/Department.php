@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use DB;
+
 class Department extends Model {
     
 	/**
@@ -12,5 +14,9 @@ class Department extends Model {
      * @var string
      */
     protected $table = 'departments';
+
+    public static function add($new_data){
+    	return DB::table('departments')->insertGetId($new_data);
+    }
 
 }
