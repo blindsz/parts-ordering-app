@@ -1733,7 +1733,7 @@ a:focus {
 .box-header > .ion,
 .box-header .box-title {
   display: inline-block;
-  font-size: 18px;
+  font-size: 16px;
   margin: 0;
   line-height: 1;
 }
@@ -4923,4 +4923,12 @@ table.text-center th {
 
 .content-wrapper{
   max-height: 100%;
+}
+
+.text-left.font-bold.hide-text::after{
+  display: none;
+}
+
+.bold{
+  font-weight: bold;
 }

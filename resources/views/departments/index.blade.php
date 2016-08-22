@@ -6,6 +6,7 @@
 @stop
 
 @section('content')
+    <input type="hidden" name="_token" value="{{ csrf_token() }}">
 	<section class="content">
         <div class="row">
     		<div class="col-xs-12">
@@ -76,6 +77,99 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal manage subdepartments -->
+    <div class="modal fade" id="manage_sub_departments_modal" tabindex="-1" role="dialog" aria-labelledby="manage_sub_departments_modal_label" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <form id="frm_manage_sub_departments">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="manage_sub_departments_modal_label">Manage Sub-Departments</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="box with-no-border-top">
+                            <div class="box-header with-border">
+                                <h3 class="box-title"><i class="fa fa-info-circle"></i> Department Details</h3>
+                            </div>
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-xs-2 wrapp-text">
+                                        <span>Id: <span class="bold" id="manage_sub_departments_id_txt"> </span></span>
+                                    </div>
+                                    <div class="col-xs-4 wrapp-text">
+                                        <span>Name: <span class="bold" id="manage_sub_departments_name_txt"> </span></span>
+                                    </div>
+                                    <div class="col-xs-6 wrapp-text">
+                                        <span>Description: <span class="bold" id="manage_sub_departments_description_txt"> </span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-footer clearfix" style="padding: 10px 0 0 0;">
+                                <div class="" style="margin-bottom:0px;">
+                                    <div class="box-header with-border">
+                                        <span class="box-title"><i class="fa fa-list" aria-hidden="true"></i> Sub-Departments</span>
+                                    </div>
+                                    <div class="box-body">
+                                        <table id="selected_sub_departments_table" class="table" cellspacing="0" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Name</th>
+                                                    <th>Description</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                
+                                            </tbody>
+                                        </table>
+                                        <button type="button" class="btn btn-xs btn-success" id="btn_add_new_sub_departments"><span class="glyphicon glyphicon-plus"></span> Add Sub-Departments</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="btn_assign_sub_departments" ><span class="glyphicon glyphicon-plus"></span> Done</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal select subdepartments -->
+    <div class="modal fade" id="select_sub_departments_modal" tabindex="-1" role="dialog" aria-labelledby="select_sub_departments_modal_label" aria-hidden="true">
+        <div class="modal-dialog modal-mini-sm">
+            <div class="modal-content">
+                <form id="frm_select_sub_departments">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="select_sub_departments_modal_label">Select Sub-Departments</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table id="sub_departments_table" class="table" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="btn_select_sub_departments"><span class="glyphicon glyphicon-plus"></span> Select</button>
                     </div>
                 </form>
             </div>

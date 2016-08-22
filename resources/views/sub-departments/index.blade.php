@@ -80,7 +80,7 @@
     <div class="modal fade" id="update_sub_department_modal" tabindex="-1" role="dialog" aria-labelledby="update_sub_department_modal_label" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
-                <form id="frm_update_sub_department" method="post">
+                <form id="frm_update_sub_department" method="put">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="update_sub_department_modal_label">Update Sub-Department Details</h4>

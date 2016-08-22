@@ -31,6 +31,31 @@ class DepartmentsController extends Controller {
         $data = array_merge($data, $time_stamp);
 
         return Department::add($data);
-    }    
-    
+    }
+
+    public function department_put(Request $request, $id){
+        $time_stamp = array(
+            "updated_at" => date("Y-m-d H:i:s")
+        );
+
+        $data = $request->input('updatedData');
+
+        if(!$data){
+            $data = array('sub_department_ids' =>  $data);
+            $data = array_merge($data, $time_stamp);
+
+            Department::where('id', $id)->update($data);
+
+            return $id;
+        }
+        else{
+            $data = implode(",",$data);
+            $data = array('sub_department_ids' => '['. $data .']');
+            $data = array_merge($data, $time_stamp);
+
+            Department::where('id', $id)->update($data);
+
+            return $id;
+        }
+    }
 }

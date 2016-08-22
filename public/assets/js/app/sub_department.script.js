@@ -31,7 +31,7 @@
 
         put: function (updatedData, id){
             var deferred = $.Deferred();
-            $.put(BASE_URL + CURRENT_ROUTE + "/sub_department_put/ " + id + " ",{
+            $.put(BASE_URL + CURRENT_ROUTE + "/sub_department_put/" + id + " ",{
                 updatedData: updatedData,
                 _token:_token
             },function (data) { deferred.resolve(data) });

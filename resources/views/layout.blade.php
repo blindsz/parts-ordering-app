@@ -5,6 +5,7 @@
             @include("_shared/fonts")
             @include("_shared/css")
             @yield('css')
+            <meta name="csrf-token" content="{{ csrf_token() }}">
     </head>
     <body class="hold-transition fixed skin-blue sidebar-mini">
         <div class="wrapper">

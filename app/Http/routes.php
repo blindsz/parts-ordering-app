@@ -60,6 +60,11 @@ Route::post('/departments/department_post',[
 	'as' => 'add_new_department'
 ]);
 
+Route::put('/departments/department_put/{id}',[
+	'uses' => 'DepartmentsController@department_put', 
+	'as' => 'update_department'
+]);
+
 
 /*
 |--------------------------------------------------------------------------

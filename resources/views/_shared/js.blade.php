@@ -1,12 +1,14 @@
 <script type="text/javascript">
 	var BASE_URL = "{{ URL::to('/') . "/" }}";
 	var CURRENT_ROUTE = "{{ Route::getCurrentRoute()->getPath() }}";
-	var _token = '{{ csrf_token() }}';
+	var _token = '{{{ csrf_token() }}}';
 </script>
 
 <!-- jQuery -->
 <script type="text/javascript" src="{{{ asset('assets/js/jquery/jQuery-2.1.3.min.js') }}}"></script>
 <script type="text/javascript" src="{{{ asset('assets/js/jquery/jQuery-Rest.js') }}}"></script>
+
+
 
 <!-- slim scroll this is important! for fixed position of the sidebar and navbar --><!-- AdminLTE -->
 <script type="text/javascript" src="{{{ asset('assets/js/slim_scroll/jquery.slimscroll.min.js') }}}"></script>

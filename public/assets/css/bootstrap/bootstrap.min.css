@@ -7202,6 +7202,10 @@ button.close {
     .modal-sm {
         width: 300px
     }
+    .modal-mini-sm {
+        width: 450px;
+        margin-top: 70px !important;
+    }
 }
 
 @media (min-width:992px) {
@@ -8076,4 +8080,15 @@ button.close {
     .hidden-print {
         display: none!important
     }
+}
+
+.wrapp-text{
+    max-width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.odd.default, .even.default{
+    background-color: #eaeaea;
 }
