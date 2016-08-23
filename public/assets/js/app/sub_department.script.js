@@ -95,10 +95,14 @@
 
             this.$kTSubDepartment.event.focus(null, null, function (node, x, y) {
                 global.table.currentRowPos = y;
+                global.DOM.$btnDeleteSubDepartment.removeAttr("disabled");
+                global.DOM.$btnUpdateSubDepartment.removeAttr("disabled");
             });
 
             this.$kTSubDepartment.event.blur(null, null, function (node, x, y) {
                 global.table.selectedRowPos = -1;
+                global.DOM.$btnDeleteSubDepartment.attr("disabled","disabled");
+                global.DOM.$btnUpdateSubDepartment.attr("disabled","disabled");
             })
 
     		return this;
@@ -111,6 +115,8 @@
                 $(this).find("input:visible:first").focus();
             });
 
+            overLayView.init().show();
+
             model.getAll().done(function (subDepartment) {
                 self.$dtSubDepartment.clear().draw();
 
@@ -122,6 +128,7 @@
                     ]);
                     self.$dtSubDepartment.draw(false);
                 }
+                overLayView.init().hide();
             });
 
     		return this;
@@ -292,8 +299,8 @@
             var self = this;
 
             this.$btnRefreshSubDepartment.click(function (){
-                
-                 model.getAll().done(function (subDepartment) {
+                overLayView.init().show();
+                model.getAll().done(function (subDepartment) {
                     indexView.$dtSubDepartment.clear().draw();
 
                     for(var i=0; i<subDepartment.length; i++){
@@ -304,6 +311,7 @@
                         ]);
                         indexView.$dtSubDepartment.draw(false);
                     }
+                    overLayView.init().hide();
 
                 });
             });
@@ -335,6 +343,27 @@
                 }
             });
             return this;
+        }
+    };
+
+    overLayView = {
+        init: function (){
+            this.$overlay = $("#overlay");
+
+            return this;
+        },
+
+        show: function(){
+            var self = this;
+
+            self.$overlay.fadeIn();
+
+            return this;
+        },
+        hide: function(){
+            var self = this;
+
+            self.$overlay.fadeOut();
         }
     };
 

@@ -81,7 +81,6 @@
 
             return deferred.promise();
         }
-
     };
 
     var global= {
@@ -89,7 +88,7 @@
             $btnNewDepartment: $("#btn_new_department"),
             $btnUpdateDepartment: $("#btn_update_department"),
             $btnDeleteDepartment: $("#btn_delete_department"),
-            $btnRefreshDepartment: $("#btn_refresh_department"),
+            $btnRefreshDepartments: $("#btn_refresh_departments"),
             $btnManageSubDepartments: $("#btn_manage_sub_departments"),
             $tableDepartment: $("#department_table"),
             $modal: $("div.modal")
@@ -110,6 +109,7 @@
             manageSubDepartmentsView.init().render();
             updateDepartmentView.init().render();
             deleteDepartmentView.init().render();
+            refreshDepartmentsView.init().render();
             selectSubDepartmentsView.init().render();
 
 	    }
@@ -137,10 +137,16 @@
 
             this.$kTDepartment.event.focus(null, null, function (node, x, y) {
                 global.table.currentRowPos = y;
+                global.DOM.$btnDeleteDepartment.removeAttr("disabled");
+                global.DOM.$btnUpdateDepartment.removeAttr("disabled");
+                global.DOM.$btnManageSubDepartments.removeAttr("disabled");
             });
 
             this.$kTDepartment.event.blur(null, null, function (node, x, y) {
                 global.table.selectedRowPos = -1;
+                global.DOM.$btnDeleteDepartment.attr("disabled","disabled");
+                global.DOM.$btnUpdateDepartment.attr("disabled","disabled");
+                global.DOM.$btnManageSubDepartments.attr("disabled","disabled");
             });
 
     		return this;
@@ -592,6 +598,61 @@
                         }
                     );
                 }
+            });
+
+            return this;
+        }
+    };
+
+    refreshDepartmentsView = {
+        init: function(){
+            this.$btnRefreshDepartments = global.DOM.$btnRefreshDepartments;
+
+            return this;
+        },
+
+        render: function (){
+            var self = this;
+
+            this.$btnRefreshDepartments.click(function (){
+                overLayView.init().show();
+                model.getAll().done(function (departmentData) {
+                    var asyncCounter = 0;
+                    var data = [];
+
+                    async.forEach(departmentData, function(department, callback) {    
+                        var subDepartmentIds = (department.sub_department_ids == 0) ? JSON.parse("null") : JSON.parse(department.sub_department_ids);
+
+                        model.getSubDepartmentsByIds(subDepartmentIds).done(function(subDepartments){
+                            data.push({
+                                subDepartments: subDepartments,
+                                id: department.id,
+                                name: department.name,
+                                description: department.description
+                            });
+                            callback();
+                        });
+                    }, function (){
+                        indexView.$dtDepartment.clear().draw();
+
+                        for(var i=0; i<data.length; i++){
+                            var subDepartmentNames = [];
+
+                            for(var j=0; j<data[i].subDepartments.length; j++){
+                                subDepartmentNames.push(data[i].subDepartments[j].name);
+                            }
+
+                            indexView.$dtDepartment.row.add([
+                                data[i]['id'],
+                                data[i]['name'],
+                                data[i]['description'],
+                                (subDepartmentNames.length === 0) ? indexView.noSubDepartmentMsg : subDepartmentNames
+                            ]);
+                            indexView.$dtDepartment.draw(false);
+                        }
+                        overLayView.init().hide();
+                    });
+                });
             });
 
             return this;

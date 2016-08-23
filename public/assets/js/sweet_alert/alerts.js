@@ -36,7 +36,7 @@ var Alerts = (function () {
 			confirmButtonText: confirmText,
 			confirmButtonColor: confirmButtonColor,
 			confirmButtonClass: "btn-danger",
-			closeOnConfirm: false
+			closeOnConfirm: true
 		}, callback);
 	}
 

@@ -79,14 +79,30 @@ return [
             'schema' => 'public',
         ],
 
-        'sqlsrv' => [
-            'driver' => 'sqlsrv',
-            'host' => 'JAREDJAN', // Provide IP address here
-            'database' => 'parts_ordering_app',
-            'username' => 'root',
-            'password' => '',
+        'mssql' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HOST', 'localhost'),
+            'port' => env('DB_PORT', '3306'),
+            'database' => env('DB_DATABASE', 'forge'),
+            'username' => env('DB_USERNAME', 'forge'),
+            'password' => env('DB_PASSWORD', ''),
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
             'prefix' => '',
+            'strict' => false,
+            'engine' => null,
         ],
+
+        // Already connected to mssql commented because there is still no database for the parts. 
+        
+        // 'mssql' => [
+        //     'driver' => 'sqlsrv',
+        //     'host' => 'JAREDJAN', // Provide IP address here
+        //     'database' => 'parts_ordering_app',
+        //     'username' => 'root',
+        //     'password' => '',
+        //     'prefix' => '',
+        // ],
     ],
 
     /*

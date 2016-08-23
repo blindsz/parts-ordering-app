@@ -29,9 +29,12 @@
                             </tbody>
                         </table>
                         <button type="button" class="btn btn-success pull-right" id="btn_new_sub_department"><span class="glyphicon glyphicon-plus"></span> New Sub-Department</button>
-                        <button type="button" class="btn btn-danger" id="btn_delete_sub_department"><span class="fa fa-trash-o"></span></button>
-                        <button type="button" class="btn btn-primary" id="btn_update_sub_department"><span class="fa fa-pencil"></span></button>
+                        <button type="button" class="btn btn-danger" id="btn_delete_sub_department" disabled><span class="fa fa-trash-o"></span></button>
+                        <button type="button" class="btn btn-primary" id="btn_update_sub_department" disabled><span class="fa fa-pencil"></span></button>
 						<button type="button" class="btn btn-default" id="btn_refresh_sub_department_list"><span class="glyphicon glyphicon-refresh"></span></button>
+                    </div>
+                    <div class="overlay" id="overlay">
+                        <i class="fa fa-refresh fa-spin"></i>
                     </div>
                 </div>
             </div>

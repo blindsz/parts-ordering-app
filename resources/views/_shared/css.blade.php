@@ -15,5 +15,9 @@
 <!-- sweet alert -->
 <link rel="stylesheet" href="{{{ asset('assets/css/sweet_alert/sweet-alert.css') }}}">
 
+<!-- toast -->
+<link rel="stylesheet" href="{{{ asset('assets/css/toast/toastr.css') }}}">
+
 <!-- choosen -->
 <link rel="stylesheet" href="{{{ asset('assets/css/choosen/bootstrap-chosen.css') }}}">
+<link rel="stylesheet" href="{{{ asset('assets/css/choosen/chosen.css') }}}">

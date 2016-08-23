@@ -33,6 +33,9 @@
 <script type="text/javascript" src="{{{ asset('assets/js/sweet_alert/sweet-alert.min.js') }}}"></script>
 <script type="text/javascript" src="{{{ asset('assets/js/sweet_alert/alerts.js') }}}"></script>
 
+<!-- toast -->
+<script type="text/javascript" src="{{{ asset('assets/js/toast/toastr.min.js') }}}"></script>
+
 <!-- choosen -->
 <script type="text/javascript" src="{{{ asset('assets/js/choosen/chosen.jquery.min.js') }}}"></script>
 

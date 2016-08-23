@@ -116,6 +116,24 @@ Route::delete('/sub-departments/sub_department_delete/{id}', [
 	'as' => 'delete_sub_department'
 ]);
 
+
+/*
+|--------------------------------------------------------------------------
+| Items Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/items/items_get', [
+	'uses' => 'ItemsController@items_get', 
+	'as' => 'get_all_items'
+]);
+
+Route::get('/items/item/{id}', [
+	'uses' => 'ItemsController@item_get', 
+	'as' => 'get_item_by_id'
+]);
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Users Routes

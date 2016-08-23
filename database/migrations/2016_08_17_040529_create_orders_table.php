@@ -16,7 +16,6 @@ class CreateOrdersTable extends Migration
             $table->integer('order_reference_id');
             $table->integer('item_id');
             $table->integer('department_id')->unsigned();
-            $table->string('parts_description');
             $table->integer('quantity');
             $table->timestamps();
         });

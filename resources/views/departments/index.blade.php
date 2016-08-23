@@ -32,10 +32,10 @@
                             </tbody>
                         </table>
                         <button type="button" class="btn btn-success pull-right" id="btn_new_department"><span class="glyphicon glyphicon-plus"></span> New Department</button>
-                        <button type="button" class="btn btn-danger" id="btn_delete_department"><span class="fa fa-trash-o"></span></button>
-                        <button type="button" class="btn btn-primary" id="btn_update_department"><span class="fa fa-pencil"></span></button>
-						<button type="button" class="btn btn-default" id="btn_refresh_department_list"><span class="glyphicon glyphicon-refresh"></span></button>
-                        <button type="button" class="btn btn-primary" id="btn_manage_sub_departments"><span class="glyphicon glyphicon-list-alt"></span> Manage Sub-Departments</button>
+                        <button type="button" class="btn btn-danger" id="btn_delete_department" disabled><span class="fa fa-trash-o"></span></button>
+                        <button type="button" class="btn btn-primary" id="btn_update_department" disabled><span class="fa fa-pencil"></span></button>
+						<button type="button" class="btn btn-default" id="btn_refresh_departments"><span class="glyphicon glyphicon-refresh"></span></button>
+                        <button type="button" class="btn btn-primary" id="btn_manage_sub_departments" disabled><span class="glyphicon glyphicon-list-alt"></span> Manage Sub-Departments</button>
                     </div>
                     <div class="overlay" id="overlay">
                         <i class="fa fa-refresh fa-spin"></i>
