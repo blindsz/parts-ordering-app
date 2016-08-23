@@ -65,6 +65,15 @@ Route::put('/departments/department_put/{id}',[
 	'as' => 'update_department'
 ]);
 
+Route::put('/departments/department_put_sub_department_ids/{id}',[
+	'uses' => 'DepartmentsController@department_put_sub_department_ids', 
+	'as' => 'update_department_sub_department_ids'
+]);
+
+Route::delete('/departments/department_delete/{id}', [
+	'uses' => 'DepartmentsController@department_delete', 
+	'as' => 'delete_department'
+]);
 
 /*
 |--------------------------------------------------------------------------

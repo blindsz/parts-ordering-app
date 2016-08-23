@@ -33,7 +33,7 @@
                         </table>
                         <button type="button" class="btn btn-success pull-right" id="btn_new_department"><span class="glyphicon glyphicon-plus"></span> New Department</button>
                         <button type="button" class="btn btn-danger" id="btn_delete_department"><span class="fa fa-trash-o"></span></button>
-                        <button type="button" class="btn btn-primary" id="btn_update_sdepartment"><span class="fa fa-pencil"></span></button>
+                        <button type="button" class="btn btn-primary" id="btn_update_department"><span class="fa fa-pencil"></span></button>
 						<button type="button" class="btn btn-default" id="btn_refresh_department_list"><span class="glyphicon glyphicon-refresh"></span></button>
                         <button type="button" class="btn btn-primary" id="btn_manage_sub_departments"><span class="glyphicon glyphicon-list-alt"></span> Manage Sub-Departments</button>
                     </div>
@@ -77,6 +77,44 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal update department -->
+    <div class="modal fade" id="update_department_modal" tabindex="-1" role="dialog" aria-labelledby="update_department_modal_label" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <form id="frm_update_department" method="put">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="update_department_modal_label">Update Department</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="update_department_name">Department Name <span class="text-danger">*</span></label>
+                                    <input name="update_department_name" id="update_department_name" type="text" class="form-control" />
+                                    <div id="update_department_name_error" class="error-alert"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="update_department_description">Description <span class="text-danger">*</span></label>
+                                    <input name="update_department_description" id="update_department_description" type="text" class="form-control" />
+                                    <div id="update_department_description_error" class="error-alert"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Update</button>
                     </div>
                 </form>
             </div>
@@ -154,6 +192,7 @@
                         <h4 class="modal-title" id="select_sub_departments_modal_label">Select Sub-Departments</h4>
                     </div>
                     <div class="modal-body">
+                        <span>Not: Please click on the list to select a sub-department. You can also select multiple sub-departments on the list.</span>
                         <table id="sub_departments_table" class="table" cellspacing="0" width="100%">
                             <thead>
                                 <tr>

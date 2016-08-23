@@ -213,15 +213,15 @@
 
                     var subDepartmentId = indexView.$dtApi._('tr', {"filter":"applied"})[global.table.currentRowPos][0];
 
-                    model.get(subDepartmentId).done(function (data){
-                        if(data.status == 0){
+                    model.get(subDepartmentId).done(function (subDepartment){
+                        if(subDepartment.status == 0){
                             self.$updateSubDepartmentModal.modal("hide");
-                            Alerts.showError("Error", "The data you are trying to delete was not found.");
+                            Alerts.showError("Error", "The data you are trying to update was not found.");
                             indexView.$dtApi.fnDeleteRow(indexView.$dtApi.$('tr', {"filter":"applied"})[global.table.currentRowPos]);
                         }
                         else{
-                            self.$txtUpdateSubDepartmentName.val(data.name);
-                            self.$txtUpdateSubDepartmentDescription.val(data.description);
+                            self.$txtUpdateSubDepartmentName.val(subDepartment.name);
+                            self.$txtUpdateSubDepartmentDescription.val(subDepartment.description);
                             self.$updateSubDepartmentModal.modal("show");
                         }
                     });

@@ -19,7 +19,12 @@ class DepartmentsController extends Controller {
     }
 
     public function department_get(Request $request, $id) {
-    	return Department::find($id);
+    	if(Department::find($id)){
+            return Department::find($id);
+        }
+        else{
+            return array('status'=> '0');
+        }
     }
 
     public function department_post(Request $request) {
@@ -34,6 +39,18 @@ class DepartmentsController extends Controller {
     }
 
     public function department_put(Request $request, $id){
+        $time_stamp = array(
+            "updated_at" => date("Y-m-d H:i:s")
+        );
+        $data = $request->input('updatedData');
+        $data = array_merge($data, $time_stamp);
+
+        Department::where('id', $id)->update($data);
+
+        return $id;
+    }
+
+    public function department_put_sub_department_ids(Request $request, $id){
         $time_stamp = array(
             "updated_at" => date("Y-m-d H:i:s")
         );
@@ -57,5 +74,9 @@ class DepartmentsController extends Controller {
 
             return $id;
         }
+    }
+
+    public function department_delete(Request $request, $id){
+        Department::destroy($id);
     }
 }
