@@ -7,11 +7,17 @@ use Illuminate\Http\Response;
 
 use App\Http\Requests;
 use App\SubDepartment;
+use Auth;
 
 class SubDepartmentsController extends Controller {
 
     public function index() {
-    	return view('sub-departments.index');
+        if(Auth::check()){
+            return view('sub-departments.index');
+        }
+        else{
+            return redirect('/');
+        }
     }
 
     public function sub_departments_get() {

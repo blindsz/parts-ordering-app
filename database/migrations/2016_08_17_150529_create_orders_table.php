@@ -13,9 +13,10 @@ class CreateOrdersTable extends Migration
     public function up() {
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('order_reference_id');
+            $table->string('order_reference_no', 60);
             $table->integer('item_id');
             $table->integer('department_id')->unsigned();
+            $table->integer('sub_department_id')->unsigned();
             $table->integer('quantity');
             $table->timestamps();
         });
@@ -23,6 +24,7 @@ class CreateOrdersTable extends Migration
         // assigning foreign keys
         Schema::table('orders', function ($table) {
             $table->foreign('department_id')->references('id')->on('departments');
+            $table->foreign('sub_department_id')->references('id')->on('sub_departments');
         });
     }
 

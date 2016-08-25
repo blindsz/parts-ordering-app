@@ -13,3 +13,13 @@ table.KeyTable tr.focus {
 	/*outline: 3px solid #3366FF; outline-offset: -3px; */
 	background-color: #3C8DBC !important;
 }
+
+table#orders_table.KeyTable th.focus,
+table#orders_table.KeyTable td.focus {
+	background-color: #eaeaea !important;
+}
+
+table#orders_table.KeyTable tr.focus { 
+	/*outline: 3px solid #3366FF; outline-offset: -3px; */
+	background-color: #f4f4f4 !important;
+}

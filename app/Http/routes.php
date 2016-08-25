@@ -19,8 +19,21 @@
 */
 
 Route::get('/', [
-	'uses' => 'LoginController@index', 
+	'uses' => 'LoginController@index',
+	'middleware' => 'validateBackHistory',
 	'as' => 'login'
+]);
+
+Route::post('/login', [
+	'uses' => 'LoginController@login',
+	'middleware' => 'validateBackHistory',
+	'as' => 'enter_login'
+]);
+
+Route::get('/logout', [
+	'uses' => 'LoginController@logout', 
+	'middleware' => 'validateBackHistory',
+	'as' => 'log_out'
 ]);
 
 /*
@@ -30,10 +43,15 @@ Route::get('/', [
 */
 
 Route::get('/orders', [
-	'uses' => 'OrdersController@index', 
-	'as' => 'orders'
+	'uses' => 'OrdersController@index',
+	'middleware' => 'validateBackHistory',
+	'as' => 'orders',
 ]);
 
+Route::post('/orders/order_post', [
+	'uses' => 'OrdersController@order_post', 
+	'as' => 'add_new_orders'
+]);
 /*
 |--------------------------------------------------------------------------
 | Departments Routes
@@ -41,7 +59,8 @@ Route::get('/orders', [
 */
 
 Route::get('/departments', [
-	'uses' => 'DepartmentsController@index', 
+	'uses' => 'DepartmentsController@index',
+	'middleware' => 'validateBackHistory',
 	'as' => 'departments'
 ]);
 
@@ -82,7 +101,8 @@ Route::delete('/departments/department_delete/{id}', [
 */
 
 Route::get('/sub-departments', [
-	'uses' => 'SubDepartmentsController@index', 
+	'uses' => 'SubDepartmentsController@index',
+	'middleware' => 'validateBackHistory',
 	'as' => 'sub_departments'
 ]);
 
@@ -133,6 +153,16 @@ Route::get('/items/item/{id}', [
 ]);
 
 
+/*
+|--------------------------------------------------------------------------
+| User Levels
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/user_levels/user_levels_get', [
+	'uses' => 'UserLevelsController@user_levels_get',
+	'as' => 'get_all_user_levels'
+]);
 
 /*
 |--------------------------------------------------------------------------
@@ -141,6 +171,29 @@ Route::get('/items/item/{id}', [
 */
 
 Route::get('/users', [
-	'uses' => 'UsersController@index', 
+	'uses' => 'UsersController@index',
+	'middleware' => 'validateBackHistory',
 	'as' => 'users'
 ]);
+
+Route::get('/users/users_get', [
+	'uses' => 'UsersController@users_get',
+	'as' => 'get_all_users'
+]);
+
+Route::get('/users/user_get/{id}', [
+	'uses' => 'UsersController@user_get',
+	'as' => 'get_user_by_id'
+]);
+
+Route::post('/users/user_post', [
+	'uses' => 'UsersController@user_post',
+	'as' => 'add_new_user'
+]);
+
+Route::put('/users/user_put/{id}', [
+	'uses' => 'UsersController@user_put',
+	'as' => 'update_user'
+]);
+
+

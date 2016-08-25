@@ -14,10 +14,12 @@ class CreateUsersTable extends Migration {
             $table->increments('id');
             $table->integer('user_level_id')->unsigned();
             $table->string('username', 50);
-            $table->string('password', 50);
+            $table->string('password', 100);
             $table->string('first_name', 50);
             $table->string('middle_name', 50);
             $table->string('last_name', 50);
+            $table->string('remember_token', 100)->nullable();
+            $table->integer('status');
             $table->timestamps();            
         });
 

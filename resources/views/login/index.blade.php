@@ -7,33 +7,34 @@
 <body class="login-page">
     <div class="login-box">
     	<div class="login-logo">
-        	<a><b>An Order Apart</b></a>
+        	<a><b>Parts Ordering App</b></a>
       	</div>
       	<div class="login-box-body">
         	<p class="login-box-msg">Sign in to start your session</p>
         	<form id="frm_login" method="post">
 	          	<div class="form-group has-feedback">
-		            <input id="username" type="text" name="username" class="form-control" placeholder="Username"/>
+		            <input id="login_username" type="text" name="login_username" class="form-control" placeholder="Username"/>
 		            <span class="fa fa-user form-control-feedback"></span>
-		            <div id="username_error" class="error-alert"></div>
+		            <div id="login_username_error" class="error-alert"></div>
 	          	</div>
 	          	<div class="form-group has-feedback">
-		            <input id="password" type="password" name="password"class="form-control" placeholder="Password"/>
+		            <input id="login_password" type="password" name="login_password"class="form-control" placeholder="Password"/>
 		            <span class="fa fa-lock form-control-feedback"></span>
-		            <div id="password_error" class="error-alert"></div>
+		            <div id="login_password_error" class="error-alert"></div>
 	          	</div>
 	          	<br>
 	          	<div class="row">
 		            <div class="col-xs-4">
-		              	<button type="submit" id="login" class="btn btn-default btn-block btn-flat">Sign In</button>
-		            </div><!-- /.col -->
+		              	<button type="submit" id="btn_login" class="btn btn-default btn-block btn-flat">Sign In</button>
+		            </div>
 	          	</div>
         	</form>
-      	</div><!-- /.login-box-body -->
+      	</div>
       	<br>
       	<div class="alert alert-danger alert-dismissable" style="display:none;" id="error_message">
       	</div>
-    </div><!-- /.login-box -->
+    </div>
     @include("_shared/js")
+    <script src="{{{ asset('assets/js/app/login.script.js') }}}"></script>
 </body>
 </html>

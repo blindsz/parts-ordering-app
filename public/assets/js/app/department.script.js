@@ -190,7 +190,6 @@
                         for(var j=0; j<data[i].subDepartments.length; j++){
                             subDepartmentNames.push(data[i].subDepartments[j].name);
                         }
-
                         self.$dtDepartment.row.add([
                             data[i]['id'],
                             data[i]['name'],
@@ -232,20 +231,12 @@
                     error.appendTo("div#" + element.attr("name") + "_error")
                     },
                     rules:{
-                        new_department_name: {
-                            required: true
-                        },
-                        new_department_description: {
-                            required: true,
-                        }
+                        new_department_name: {required: true},
+                        new_department_description: {required: true}
                     },
                     messages: {
-                        new_department_name: {
-                            required: "Please enter a name."
-                        },
-                        new_department_description: {
-                            required: "Please enter a description."
-                        }
+                        new_department_name: {required: "Please enter a name."},
+                        new_department_description: {required: "Please enter a description."}
                     },
                     submitHandler: function(form){
                         var data = {
@@ -263,7 +254,7 @@
                                 ]);
                                 indexView.$dtDepartment.draw(false);
                             });
-                            Alerts.showSuccess("Success", "Succesfully added a Department");
+                            Alerts.showSuccess("", "Succesfully added a Department");
                             self.$newDepartmentModal.modal("hide");
                         })
                     }
@@ -364,7 +355,6 @@
                             for(var i=0; i<subDepartmentsData.length; i++){
                                 subDepartMentNames.push(subDepartmentsData[i].name);
                             }
-
                             indexView.$dtApi.fnUpdate([
                                 updatedData.id,
                                 updatedData.name,
@@ -373,7 +363,7 @@
                             ], indexView.$dtApi.$("tr", { "filter": "applied" })[global.table.currentRowPos]);
 
                             self.$manageSubDepartmentsModal.modal("hide");
-                            Alerts.showSuccess("Success", "Succesfully updated department sub-departments.");
+                            Alerts.showSuccess("", "Succesfully updated department sub-departments.");
                         });
                     });
                 });
@@ -461,7 +451,6 @@
                 }
                 else{
                     model.getSubDepartmentsByIds(validSubDepartments).done(function(selectedSubDepartments){
-
                         for(var i=0; i<selectedSubDepartments.length; i++){
                             manageSubDepartmentsView.$dtSelectedSubDepartments.row.add([
                                 selectedSubDepartments[i]['id'],
@@ -502,7 +491,7 @@
                     model.get(departmentId).done(function (department){
                         if(department.status == 0){
                             self.$updateDepartmentModal.modal("hide");
-                            Alerts.showError("Error", "The data you are trying to update was not found.");
+                            Alerts.showError("", "The data you are trying to update was not found.");
                             indexView.$dtApi.fnDeleteRow(indexView.$dtApi.$('tr', {"filter":"applied"})[global.table.currentRowPos]);
                         }
                         else{
@@ -519,20 +508,12 @@
                         error.appendTo("div#" + element.attr("name") + "_error")
                         },
                         rules:{
-                            update_department_name: {
-                                required: true
-                            },
-                            update_department_description: {
-                                required: true,
-                            }
+                            update_department_name: {required: true},
+                            update_department_description: {required: true}
                         },
                         messages: {
-                            update_department_name: {
-                                required: "Please enter a name."
-                            },
-                            update_department_description: {
-                                required: "Please enter a description."
-                            }
+                            update_department_name: {required: "Please enter a name."},
+                            update_department_description: {required: "Please enter a description."}
                         },
                         submitHandler: function(form){
                             departmentId = indexView.$dtApi._('tr', {"filter":"applied"})[global.table.currentRowPos][0];
@@ -552,7 +533,6 @@
                                         for(var i=0; i<subDepartmentsData.length; i++){
                                             subDepartMentNames.push(subDepartmentsData[i].name);
                                         }
-
                                         indexView.$dtApi.fnUpdate([
                                             updatedData.id,
                                             updatedData.name,
@@ -561,42 +541,13 @@
                                         ], indexView.$dtApi.$("tr", { "filter": "applied" })[global.table.currentRowPos]);
 
                                         self.$updateDepartmentModal.modal("hide");
-                                        Alerts.showSuccess("Success", "Succesfully updated a department.");
+                                        Alerts.showSuccess("", "Succesfully updated a department.");
                                     });
                                 });
                             });
                         }
                     });
-
                     validator.resetForm();
-                }
-            });
-
-            return this;
-        }
-    };
-
-    deleteDepartmentView = {
-        init: function(){
-            this.$btnDeleteDepartment = global.DOM.$btnDeleteDepartment;
-
-            return this;
-        },
-
-        render: function(){
-            var self = this;
-
-            this.$btnDeleteDepartment.click(function (){
-                 if(global.table.currentRowPos >= 0){
-                    var departmentId = indexView.$dtApi._('tr', {"filter":"applied"})[global.table.currentRowPos][0];
-                    Alerts.showConfirm("Warning!", "Are you sure you want to delete this item?", "Yes, delete it!", "#d73925",
-                        function () {
-                            model.delete(departmentId).done(function (){
-                                indexView.$dtApi.fnDeleteRow(indexView.$dtApi.$('tr', {"filter":"applied"})[global.table.currentRowPos]);
-                            });
-                            Alerts.showSuccess("Success", "Succesfully deleted a sub-department");
-                        }
-                    );
                 }
             });
 
@@ -641,7 +592,6 @@
                             for(var j=0; j<data[i].subDepartments.length; j++){
                                 subDepartmentNames.push(data[i].subDepartments[j].name);
                             }
-
                             indexView.$dtDepartment.row.add([
                                 data[i]['id'],
                                 data[i]['name'],
@@ -657,7 +607,36 @@
 
             return this;
         }
-    }
+    };
+
+    deleteDepartmentView = {
+        init: function(){
+            this.$btnDeleteDepartment = global.DOM.$btnDeleteDepartment;
+
+            return this;
+        },
+
+        render: function(){
+            var self = this;
+
+            this.$btnDeleteDepartment.click(function (){
+                 if(global.table.currentRowPos >= 0){
+                    var departmentId = indexView.$dtApi._('tr', {"filter":"applied"})[global.table.currentRowPos][0];
+                    Alerts.showConfirm("Warning!", "Are you sure you want to delete this item?", "Yes, Please!", "#d73925",
+                    function () {
+                        model.delete(departmentId).done(function (){
+                            indexView.$dtApi.fnDeleteRow(
+                                indexView.$dtApi.$('tr', {"filter":"applied"})[global.table.currentRowPos]
+                            );
+                            Alerts.showSuccess("", "Succesfully deleted a sub-department");
+                        });
+                    });
+                }
+            });
+
+            return this;
+        }
+    };
 
     overLayView = {
         init: function (){

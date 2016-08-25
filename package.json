@@ -1,4 +1,8 @@
 {
+  "name": "parts-ordering-app",
+  "private": true,
+  "version": "0.0.2",
+  "description": "A Project for Master Spas",
   "private": true,
   "scripts": {
     "prod": "gulp --production",

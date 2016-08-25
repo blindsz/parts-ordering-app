@@ -30,7 +30,7 @@
             </li>
             <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <span class="hidden-xs">Jared Jan Taquio</span>
+                    <span class="hidden-xs">{{ strtoupper(Auth::user()['first_name']." ".Auth::user()['middle_name']." ".Auth::user()['middle_name'][0]) }}</span>
                     <i class="fa fa-user fa-fw"></i>
                     <span class="caret"></span>
                 </a>
@@ -38,7 +38,7 @@
                     <li class="user-footer">
                         <div class="pull-right">
                             <i class="fa fa-sign-out fa-fw"></i>
-                            <a class="btn btn-default btn-flat">Sign out</a>
+                            <a class="btn btn-default btn-flat" href="{{ URL::to('logout') }}">Sign out</a>
                         </div>
                     </li>
                 </ul>

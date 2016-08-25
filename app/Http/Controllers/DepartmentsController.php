@@ -8,10 +8,17 @@ use App\Http\Requests;
 
 use App\Department;
 
+use Auth;
+
 class DepartmentsController extends Controller {
     
 	public function index(){
-    	return view('departments.index');
+        if(Auth::check()){
+            return view('departments.index');
+        }
+        else{
+            return redirect('/');
+        }
     }
     
     public function departments_get() {

@@ -49,4 +49,7 @@
 <!-- Async -->
 <script src="{{{ asset('assets/node_modules/async/dist/async.min.js') }}}"></script>
 
+<!-- Chance Random -->
+<script src="{{{ asset('assets/node_modules/chance/dist/chance.min.js') }}}"></script>
+
 <!-- <script src="{{{ asset('assets/js/app/app.js') }}}"></script> -->

@@ -103,7 +103,7 @@
                 global.table.selectedRowPos = -1;
                 global.DOM.$btnDeleteSubDepartment.attr("disabled","disabled");
                 global.DOM.$btnUpdateSubDepartment.attr("disabled","disabled");
-            })
+            });
 
     		return this;
     	},
@@ -137,6 +137,7 @@
 
     var newSubDepartmentView = {
         init: function () {
+
             this.$btnNewSubDepartment = global.DOM.$btnNewSubDepartment;
             this.$txtNewSubDepartmentName = $("#new_sub_department_name");
             this.$txtNewSubDepartmentDescription = $("#new_sub_department_description");
@@ -149,7 +150,6 @@
             var self = this;
     
             this.$btnNewSubDepartment.click(function (){
-
                 self.$newSubDepartmentForm[0].reset();
                 self.$newSubDepartmentModal.modal("show");
 
@@ -159,20 +159,12 @@
                     error.appendTo("div#" + element.attr("name") + "_error")
                     },
                     rules:{
-                        new_sub_department_name: {
-                            required: true
-                        },
-                        new_sub_department_description: {
-                            required: true,
-                        }
+                        new_sub_department_name: {required: true},
+                        new_sub_department_description: {required: true}
                     },
                     messages: {
-                        new_sub_department_name: {
-                            required: "Please enter a name."
-                        },
-                        new_sub_department_description: {
-                            required: "Please enter a description."
-                        }
+                        new_sub_department_name: {required: "Please enter a name."},
+                        new_sub_department_description: {required: "Please enter a description."}
                     },
                     submitHandler: function(form){
                         var data = {
@@ -187,9 +179,10 @@
                                     insertedData.name,
                                     insertedData.description,
                                 ]);
+
                                 indexView.$dtSubDepartment.draw(false);
                                 self.$newSubDepartmentModal.modal("hide");
-                                alert("Sub-Department "+ insertedData.name + " has been successfully added");
+                                Alerts.showSuccess("", "Succesfully added a new sub-department.");
                             });
                         });
                     }
@@ -217,14 +210,15 @@
 
             this.$btnUpdateSubDepartment.click(function (){
                 if(global.table.currentRowPos >= 0){
-
                     var subDepartmentId = indexView.$dtApi._('tr', {"filter":"applied"})[global.table.currentRowPos][0];
 
                     model.get(subDepartmentId).done(function (subDepartment){
                         if(subDepartment.status == 0){
                             self.$updateSubDepartmentModal.modal("hide");
-                            Alerts.showError("Error", "The data you are trying to update was not found.");
-                            indexView.$dtApi.fnDeleteRow(indexView.$dtApi.$('tr', {"filter":"applied"})[global.table.currentRowPos]);
+                            Alerts.showError("", "The data you are trying to update was not found.");
+                            indexView.$dtApi.fnDeleteRow(
+                                indexView.$dtApi.$('tr', {"filter":"applied"})[global.table.currentRowPos]
+                            );
                         }
                         else{
                             self.$txtUpdateSubDepartmentName.val(subDepartment.name);
@@ -239,29 +233,19 @@
                         error.appendTo("div#" + element.attr("name") + "_error")
                         },
                         rules:{
-                            update_sub_department_name: {
-                                required: true
-                            },
-                            update_sub_department_description: {
-                                required: true,
-                            }
+                            update_sub_department_name: {required: true},
+                            update_sub_department_description: {required: true}
                         },
                         messages: {
-                            update_sub_department_name: {
-                                required: "Please enter a name."
-                            },
-                            update_sub_department_description: {
-                                required: "Please enter a description."
-                            }
+                            update_sub_department_name: {required: "Please enter a name."},
+                            update_sub_department_description: {required: "Please enter a description."}
                         },
                         submitHandler: function(form){
-
+                            subDepartmentId = indexView.$dtApi._('tr', {"filter":"applied"})[global.table.currentRowPos][0];
                             var data = {
                                 name: self.$txtUpdateSubDepartmentName.val(),
                                 description: self.$txtUpdateSubDepartmentDescription.val()
                             };
-
-                            subDepartmentId = indexView.$dtApi._('tr', {"filter":"applied"})[global.table.currentRowPos][0];
 
                             model.put(data, subDepartmentId).done(function (updatedId) {
                                 model.get(updatedId).done(function (updatedData){
@@ -274,13 +258,11 @@
 
                                     self.$updateSubDepartmentForm[0].reset();
                                     self.$updateSubDepartmentModal.modal("hide");
-                                    alert("Sub-Department "+ updatedData.name + " has been successfully added");
-
+                                    Alerts.showSuccess("", "Succesfully update a sub-department.");
                                 });
                             });
                         }
                     });
-
                     validator.resetForm();
                 }
             })
@@ -300,6 +282,7 @@
 
             this.$btnRefreshSubDepartment.click(function (){
                 overLayView.init().show();
+
                 model.getAll().done(function (subDepartment) {
                     indexView.$dtSubDepartment.clear().draw();
 
@@ -312,7 +295,6 @@
                         indexView.$dtSubDepartment.draw(false);
                     }
                     overLayView.init().hide();
-
                 });
             });
 
@@ -332,14 +314,15 @@
             this.$btnDeleteSubDepartment.click(function (){
                  if(global.table.currentRowPos >= 0){
                     var subDepartmentId = indexView.$dtApi._('tr', {"filter":"applied"})[global.table.currentRowPos][0];
-                    Alerts.showConfirm("Warning!", "Are you sure you want to delete this item?", "Yes, delete it!", "#d73925",
-                        function () {
-                            model.delete(subDepartmentId).done(function (){
-                                indexView.$dtApi.fnDeleteRow(indexView.$dtApi.$('tr', {"filter":"applied"})[global.table.currentRowPos]);
-                            });
-                            Alerts.showSuccess("Success", "Succesfully deleted a sub-department");
-                        }
-                    );
+                    Alerts.showConfirm("Warning!", "Are you sure you want to delete this item?", "Yes, Please", "#d73925",
+                    function () {
+                        model.delete(subDepartmentId).done(function (){
+                            indexView.$dtApi.fnDeleteRow(
+                                indexView.$dtApi.$('tr', {"filter":"applied"})[global.table.currentRowPos]
+                            );
+                            Alerts.showSuccess("", "Succesfully deleted a sub-department");
+                        });
+                    });
                 }
             });
             return this;

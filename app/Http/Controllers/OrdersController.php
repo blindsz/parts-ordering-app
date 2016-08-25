@@ -7,37 +7,36 @@ use DB;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Order;
+use Auth;
 
 class OrdersController extends Controller {
     
 	public function index(){
-
-		// DB::connection('sqlsrv')->table('items')->insert([
-  //   		['description' => 'parts_1'],
-  //   		['description' => 'parts_2'],
-  //   		['description' => 'parts_3'],
-  //   		['description' => 'parts_4'],
-  //   		['description' => 'parts_5'],
-  //   		['description' => 'parts_6'],
-  //   		['description' => 'parts_7'],
-  //   		['description' => 'parts_8'],
-  //   		['description' => 'parts_9']
-		// ]);
-		// $asd = [
-  //   		['description' => 'parts_1'],
-  //   		['description' => 'parts_2'],
-  //   		['description' => 'parts_3'],
-  //   		['description' => 'parts_4'],
-  //   		['description' => 'parts_5'],
-  //   		['description' => 'parts_6'],
-  //   		['description' => 'parts_7'],
-  //   		['description' => 'parts_8'],
-  //   		['description' => 'parts_9']
-		// ];
-
-		// print_r($asd);
-
-    	return view('orders.index');
+        if(Auth::check()){
+            return view('orders.index');
+        }
+        else{
+            return redirect('/');
+        }
     }
 
+    public function order_post(Request $request){
+        $time_stamp = array(
+            "created_at"=> date("Y-m-d H:i:s"), 
+            "updated_at" => date("Y-m-d H:i:s")
+        );
+
+        $data = $request->input('newData');
+        $merged_data = array();
+        
+        for($i = 0; $i < count($data); $i++){
+            $merged_data[] = array_merge($data[$i], $time_stamp);
+        }
+        
+        Order::add($merged_data);
+
+        return array('status'=> 'success');
+        
+    }
 }

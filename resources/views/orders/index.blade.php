@@ -45,14 +45,15 @@
 		                                <th>Qty</th>
 		                                <th>Price</th>
 		                                <th>Total</th>
+		                                <th></th>
 		                            </tr>
 		                        </thead>
 		                        <tbody>
 		                      	</tbody>
 	                  		</table>
 	                  	</div>
+	                  	<br style="height:15px;">
 	                  	<div class="col-lg-3">
-	                  		<br></br>
 	                  		<form id="frm_choose_options">
 								<div class="form-group">
 									<label for="choose_department_pay">Choose Department:</label>
@@ -90,12 +91,12 @@
 							<div class="form-group">
 								<div class="row">
 									<div class="col-lg-12">
-										<button id="btn_complete_transaction" type="button" class="btn btn-default btn-block resettable"><span class="fa fa-inbox"></span> Complete Transaction</button>
+										<button id="btn_complete_transaction" type="button" class="btn btn-primary btn-block resettable"><span class="fa fa-inbox"></span> Complete Transaction</button>
 									</div>
 								</div>
 							</div>
-							<br></br>
 						</div>
+						<span>Note: You need to open a new transaction before you can proceed.</span>
         			</div>
       			</div>
             </div>
