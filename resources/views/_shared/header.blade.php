@@ -5,7 +5,7 @@
     </a>
     <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
-            <li class="dropdown messages-menu">
+            <!-- <li class="dropdown messages-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <i class="fa fa-envelope-o"></i>
                     <span class="label label-success">4</span>
@@ -27,7 +27,7 @@
                     </li>
                     <li class="footer"><a href="#">See All Messages</a></li>
                 </ul>
-            </li>
+            </li> -->
             <li class="dropdown messages-menu" id="btn_email_settings">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <i class="fa fa-cogs"></i>
