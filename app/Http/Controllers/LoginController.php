@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Auth;
 use URL;
+use Redirect;
 
 class LoginController extends Controller {
     
@@ -22,11 +23,12 @@ class LoginController extends Controller {
 
         $userdata = array(
             'username' => $request->input('username'),
-            'password' => $request->input('password')
+            'password' => $request->input('password'),
+            'status' => 1
         );
 
         if (Auth::attempt($userdata)) {
-            return array('status'=> 1);
+            return Redirect::intended('orders');
         } 
         else {   
             return array('status'=> 0);

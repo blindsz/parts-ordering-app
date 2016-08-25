@@ -60,11 +60,11 @@
                         };
 
                         model.post(data).done(function(isCorrect){
-                            if(isCorrect.status === 1){
-                                window.location = BASE_URL + "orders";
+                            if(isCorrect.status === 0){
+                                toastr.info('Your username and password is incorrect or you have a inactive credentials.');
                             }
                             else{
-                                toastr.info('Username or Password is incorrect. Please try again.');
+                                window.location.replace(BASE_URL + "orders");
                             }
                         });
                     }

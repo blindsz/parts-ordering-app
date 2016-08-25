@@ -30,7 +30,7 @@
             </li>
             <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <span class="hidden-xs">{{ strtoupper(Auth::user()['first_name']." ".Auth::user()['middle_name']." ".Auth::user()['middle_name'][0]) }}</span>
+                    <span class="hidden-xs">{{ strtoupper(Auth::user()['first_name']." ".Auth::user()['last_name']." ".Auth::user()['middle_name'][0]) ."."}}</span>
                     <i class="fa fa-user fa-fw"></i>
                     <span class="caret"></span>
                 </a>

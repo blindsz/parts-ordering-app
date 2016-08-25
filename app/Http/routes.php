@@ -197,3 +197,13 @@ Route::put('/users/user_put/{id}', [
 ]);
 
 
+/*
+|--------------------------------------------------------------------------
+| Email Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::get('orders/send_email_post', [
+	'uses' => 'EmailController@send_email_post',
+	'as' => 'send_email'
+]);
