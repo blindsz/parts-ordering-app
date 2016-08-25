@@ -36,7 +36,7 @@ class OrdersController extends Controller {
         
         Order::add($merged_data);
 
-        return array('status'=> 'success');
+        return $merged_data;
         
     }
 }

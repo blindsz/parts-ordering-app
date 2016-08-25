@@ -17,6 +17,8 @@ class VerifyCsrfToken extends BaseVerifier
         'orders/*',
         'users/*',
         'user_levels/*',
+        'settings/*',
+        'items/*',
         '/*'
         //
     ];

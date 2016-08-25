@@ -45,6 +45,29 @@
             return deferred.promise();
         },
 
+        getSettings: function (){
+            var deferred = $.Deferred();
+            $.get(BASE_URL + "settings/settings_get", { }, function (data) {
+                deferred.resolve(data);
+            });
+
+            return deferred.promise();
+        },
+
+        sendEmail: function(orderedItems, orderInfos, emailSettings){
+            var deferred = $.Deferred();
+            $.post(BASE_URL + CURRENT_ROUTE + "/send_email_post",{
+                 orderedItems: orderedItems,
+                 orderInfos: orderInfos,
+                 emailSettings: emailSettings,
+                _token:_token
+            }, function (data) {
+                deferred.resolve(data);
+            });
+
+            return deferred.promise();
+        },
+
         post: function(newData){
             var deferred = $.Deferred();
             $.post(BASE_URL + CURRENT_ROUTE + "/order_post",{
@@ -491,6 +514,9 @@
                         if(global.DOM.$selectDepartment.val() !== null && global.DOM.$selectSubDepartment.val() !== null){
                             var ordersList = indexView.$dtOrders.rows().data();
                             var orderDetails = [];
+                            var orderedItems = [];
+                            var orderInfos = [];
+                            var emailSettings = [];
                             var orderReferenceNO = chance.hash({length: 15, casing: 'upper'});
 
                             for(var i=0; i<ordersList.length; i++){
@@ -503,13 +529,44 @@
                                 })
                             }
 
+                            for(var i=0; i<ordersList.length; i++){
+                                orderedItems.push({
+                                    item_id: ordersList[i][0],
+                                    item_description: ordersList[i][1],
+                                    item_price: ordersList[i][3],
+                                    item_total_price: ordersList[i][4],
+                                    quantity: parseInt(ordersList[i][2])
+                                })
+                            }
+
+                            orderInfos.push({
+                                order_reference_no: orderReferenceNO,
+                                grand_total: indexView.$txtOrdersGrandTotal.val(),
+                                department: $("#select_department option:selected").text(),
+                                sub_department: $("#select_sub_department option:selected").text()
+                            });                            
+                        
                             Alerts.showConfirm("", "Are you sure you want to complete this transaction? ", "Yes, Please", "#3c8dbc", function (isConfirm){
                                 if (isConfirm) {
-                                    model.post(orderDetails).done(function(){
+                                    model.post(orderDetails).done(function(orders){
                                         indexView.disableFormInputs();
                                         Alerts.showSuccess("", "Transaction Completed!. <br>Your Order Reference # is <strong>"+ orderReferenceNO + "</strong>");
                                         global.transactionStatus = 0;
                                         global.transactionFinish = true;
+
+                                        model.getSettings().done(function(settings){
+                                            for(var i=0; i<settings.length; i++){
+                                                emailSettings.push({
+                                                   name:settings[i].name,
+                                                   credentialType: settings[i].credential_type,
+                                                   email: settings[i].email
+                                                })
+                                            }
+                                            
+                                            model.sendEmail(orderedItems, orderInfos, emailSettings).done(function(orders){
+                                                console.log(orders);
+                                            });
+                                        });
                                     });
                                 }
                             }); 

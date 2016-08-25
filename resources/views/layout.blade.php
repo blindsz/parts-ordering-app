@@ -23,4 +23,7 @@
     </body>
         @include("_shared/js")
         @yield('js')
+        
+        <!-- Settings Script -->
+        <script src="{{{ asset('assets/js/app/settings.script.js') }}}"></script>
 </html>

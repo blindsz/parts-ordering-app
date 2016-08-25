@@ -203,7 +203,33 @@ Route::put('/users/user_put/{id}', [
 |--------------------------------------------------------------------------
 */
 
-Route::get('orders/send_email_post', [
+Route::post('orders/send_email_post', [
 	'uses' => 'EmailController@send_email_post',
 	'as' => 'send_email'
+]);
+
+Route::get('/email', [
+	'uses' => 'EmailController@index'
+]);
+
+
+/*
+|--------------------------------------------------------------------------
+| Settings Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::get('settings/settings_get', [
+	'uses' => 'SettingsController@settings_get',
+	'as' => 'get_all_settings'
+]);
+
+Route::get('settings/setting_get/{credential_type}', [
+	'uses' => 'SettingsController@setting_get',
+	'as' => 'get_setting_by_id'
+]);
+
+Route::put('settings/setting_put/{credential_type}', [
+	'uses' => 'SettingsController@setting_put',
+	'as' => 'update_settings_by_id'
 ]);

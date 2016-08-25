@@ -120,5 +120,5 @@
 @stop
 
 @section('js')
-    <script src="{{{ asset('assets/js/app/sub_department.script.js') }}}"></script>
+    <script src="{{{ asset('assets/js/app/sub.departments.script.js') }}}"></script>
 @stop

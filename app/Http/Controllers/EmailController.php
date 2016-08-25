@@ -10,15 +10,24 @@ use Mail;
 class EmailController extends Controller {
 
 	public function index(){
-
+		return view('email.index');
 	}
 
-    public function send_email_post(){
+    public function send_email_post(Request $request){
 
-    	Mail::send("email.index", ['name'=>'Novica'], function ($message) {
+    	$email_data = array(
+			"orderedItems" => $request->input('orderedItems'),
+			"orderInfos" => $request->input('orderInfos')
+		);
 
-            $message->to('jaredjan0803@gmail.com', 'gwapo jared')->from('otheremail@some.com')->subject('hello world');
+    	$email_settings = $request->input('emailSettings');
 
+    	Mail::send("email.index", $email_data, function ($message) 
+    		use ($email_settings) {
+            $message->to($email_settings[1]['email'], $email_settings[1]['name'])
+            		->from($email_settings[0]['email'], $email_settings[0]['name'])
+            		->subject('You have a new order!');
         });
     }
 }
+
