@@ -249,7 +249,7 @@
                                  indexView.$dtDepartment.row.add([
                                     insertedData.id,
                                     insertedData.name,
-                                    insertedData.name,
+                                    insertedData.description,
                                     indexView.noSubDepartmentMsg
                                 ]);
                                 indexView.$dtDepartment.draw(false);

@@ -8,8 +8,6 @@
 <script type="text/javascript" src="{{{ asset('assets/js/jquery/jQuery-2.1.3.min.js') }}}"></script>
 <script type="text/javascript" src="{{{ asset('assets/js/jquery/jQuery-Rest.js') }}}"></script>
 
-
-
 <!-- slim scroll this is important! for fixed position of the sidebar and navbar --><!-- AdminLTE -->
 <script type="text/javascript" src="{{{ asset('assets/js/slim_scroll/jquery.slimscroll.min.js') }}}"></script>
 <script type="text/javascript" src="{{{ asset('assets/js/adminlte/app.min.js') }}}"></script>
@@ -43,11 +41,14 @@
 <script type="text/javascript" src="{{{ asset('assets/js/editable/jquery.jeditable.js') }}}"></script>
 
 <!-- jquery validation -->
-<script src="{{{ asset('assets/js/jquery_validate/jquery.validate.min.js') }}}"></script>
-<script src="{{{ asset('assets/js/jquery_validate/additional-methods.min.js') }}}"></script>
+<script type="text/javascript" src="{{{ asset('assets/js/jquery_validate/jquery.validate.min.js') }}}"></script>
+<script type="text/javascript" src="{{{ asset('assets/js/jquery_validate/additional-methods.min.js') }}}"></script>
 
 <!-- Async -->
-<script src="{{{ asset('assets/node_modules/async/dist/async.min.js') }}}"></script>
+<script type="text/javascript" src="{{{ asset('assets/node_modules/async/dist/async.min.js') }}}"></script>
 
 <!-- Chance Random -->
-<script src="{{{ asset('assets/node_modules/chance/dist/chance.min.js') }}}"></script>
+<script type="text/javascript" src="{{{ asset('assets/node_modules/chance/dist/chance.min.js') }}}"></script>
+
+<!-- Chance Random -->
+<script type="text/javascript" src="{{{ asset('assets/js/pace/pace.min.js') }}}"></script>

@@ -21,3 +21,6 @@
 <!-- choosen -->
 <link rel="stylesheet" href="{{{ asset('assets/css/choosen/bootstrap-chosen.css') }}}">
 <link rel="stylesheet" href="{{{ asset('assets/css/choosen/chosen.css') }}}">
+
+<!-- choosen -->
+<link rel="stylesheet" href="{{{ asset('assets/css/pace/pace.min.css') }}}">
