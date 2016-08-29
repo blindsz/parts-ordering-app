@@ -112,10 +112,12 @@
 
             this.$kTUsers.event.focus(null, null, function (node, x, y) {
                 global.table.currentRowPos = y;
+                global.DOM.$btnUpdateUser.removeAttr("disabled");
             });
 
             this.$kTUsers.event.blur(null, null, function (node, x, y) {
                 global.table.selectedRowPos = -1;
+                global.DOM.$btnUpdateUser.attr("disabled","disabled");
             });
 
     		return this;

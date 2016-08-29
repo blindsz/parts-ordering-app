@@ -32,7 +32,7 @@
                             </tbody>
                         </table>
                         <button type="button" class="btn btn-success pull-right" id="btn_new_user"><span class="glyphicon glyphicon-plus"></span> New User</button>
-                        <button type="button" class="btn btn-primary" id="btn_update_user"><span class="fa fa-pencil"></span></button>
+                        <button type="button" class="btn btn-primary" id="btn_update_user" disabled="disabled"><span class="fa fa-pencil"></span></button>
 						<button type="button" class="btn btn-default" id="btn_refresh_users"><span class="glyphicon glyphicon-refresh"></span></button>
                     </div>
                     <div class="overlay" id="overlay">
