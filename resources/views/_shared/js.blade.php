@@ -50,5 +50,8 @@
 <!-- Chance Random -->
 <script type="text/javascript" src="{{{ asset('assets/node_modules/chance/dist/chance.min.js') }}}"></script>
 
-<!-- Chance Random -->
+<!-- Pace -->
 <script type="text/javascript" src="{{{ asset('assets/js/pace/pace.min.js') }}}"></script>
+
+<!-- Jquery Numeric -->
+<script type="text/javascript" src="{{{ asset('assets/js/numeric/jquery.numeric.js') }}}"></script>

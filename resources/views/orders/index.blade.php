@@ -77,26 +77,26 @@
 							<div class="form-group">
 								<div class="row">
 									<div class="col-lg-12">
-										<button id="btn_new_transaction" type="button" class="btn btn-default btn-block resettable"><span class="fa fa-folder-open"></span> New Transaction</button>
+										<button id="btn_new_order" type="button" class="btn btn-default btn-block resettable"><span class="fa fa-folder-open"></span> New Order</button>
 									</div>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="row">
 									<div class="col-lg-12">
-										<button id="btn_close_transaction" type="button" class="btn btn-default btn-block resettable"><span class="fa fa-times"></span> Close Transaction</button>
+										<button id="btn_close_order" type="button" class="btn btn-default btn-block resettable"><span class="fa fa-times"></span> Close/Cancel Order</button>
 									</div>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="row">
 									<div class="col-lg-12">
-										<button id="btn_complete_transaction" type="button" class="btn btn-primary btn-block resettable"><span class="fa fa-inbox"></span> Complete Transaction</button>
+										<button id="btn_complete_order" type="button" class="btn btn-primary btn-block resettable"><span class="fa fa-inbox"></span> Complete Order</button>
 									</div>
 								</div>
 							</div>
 						</div>
-						<span>Note: You need to open a new transaction before you can proceed.</span>
+						<span>Note: You need to open a new order before you can proceed.</span>
         			</div>
       			</div>
             </div>

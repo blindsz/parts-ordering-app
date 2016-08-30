@@ -314,7 +314,7 @@
             this.$btnDeleteSubDepartment.click(function (){
                  if(global.table.currentRowPos >= 0){
                     var subDepartmentId = indexView.$dtApi._('tr', {"filter":"applied"})[global.table.currentRowPos][0];
-                    Alerts.showConfirm("Warning!", "Are you sure you want to delete this item?", "Yes, Please", "#d73925",
+                    Alerts.showConfirm("Warning!", "Are you sure you want to delete this item?", "Yes", "#d73925",
                     function () {
                         model.delete(subDepartmentId).done(function (){
                             indexView.$dtApi.fnDeleteRow(

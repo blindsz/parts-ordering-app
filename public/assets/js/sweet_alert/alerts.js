@@ -33,7 +33,7 @@ var Alerts = (function () {
 			type: "warning",
 			html: true,
 			showCancelButton: true,
-			cancelButtonText: "No, Please",
+			cancelButtonText: "No",
 			confirmButtonText: confirmText,
 			confirmButtonColor: confirmButtonColor,
 			confirmButtonClass: "btn-danger",

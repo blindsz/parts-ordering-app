@@ -85,9 +85,9 @@
         DOM: {
             $tableOrders: $("#orders_table"),
             $btnChooseItems: $("#choose_item"),
-            $btnNewTransaction: $("#btn_new_transaction"),
-            $btnCloseTransaction: $("#btn_close_transaction"),
-            $btnCompleteTransaction: $("#btn_complete_transaction"),
+            $btnNewOrder: $("#btn_new_order"),
+            $btnCloseOrder: $("#btn_close_order"),
+            $btnCompleteOrder: $("#btn_complete_order"),
             $btnDeleteOrder: $("#btn_delete_orders"),
             $chooseItemsFormInputs: $("#frm_choose_items :input"),
             $chooseOrdersOptions: $("#frm_choose_options :input"),
@@ -107,8 +107,8 @@
             currentRowPos: -1
         },
 
-        transactionStatus: 0,
-        transactionFinish: false
+        orderStatus: 0,
+        orderFinish: false
     };
 
     var controller = {
@@ -117,11 +117,12 @@
 
             global.DOM.$selectDepartment.chosen({no_results_text: "Oops, nothing found!"});
             global.DOM.$selectSubDepartment.chosen({no_results_text: "Oops, nothing found!"});
+            global.DOM.$txtItemQuantity.numeric(false);
 
             indexView.init().render();
             addItemView.init().render();
             selectItemsView.init().render();
-            completeTransactionView.init().render();
+            completeOrderView.init().render();
             indexView.disableFormInputs();
             deleteOrdersView.init().render();
 	    }
@@ -135,13 +136,13 @@
             this.$dtOrders = global.DOM.$tableOrders.DataTable({
                 "columns": [
                     { "sClass": "text-left font-bold", "sWidth": "15%" },
-                    { "sClass": "text-left font-bold", "sWidth": "39%" },
-                    { "sClass": "text-left font-bold quantity editable", "sWidth": "10%" },
-                    { "sClass": "text-left font-bold", "sWidth": "15%" },
-                    { "sClass": "text-left font-bold", "sWidth": "15%" },
-                    { "sClass": "text-left font-bold", "sWidth": "6%" },
+                    { "sClass": "text-left font-bold", "sWidth": "64%" },
+                    { "sClass": "text-left font-bold quantity editable", "sWidth": "13%" },
+                    { "sClass": "text-left font-bold", "sWidth": "15%" , "visible": false},
+                    { "sClass": "text-left font-bold", "sWidth": "15%" , "visible": false},
+                    { "sClass": "text-left font-bold", "sWidth": "8%" },
                 ],
-                responsive: true,
+                responsive: false,
                 "bAutoWidth": false,
                 "bLengthChange": false,
                 "bPaginate" : false,
@@ -162,8 +163,8 @@
             this.$selectDepartment = global.DOM.$selectDepartment;
             this.$selectSubDepartment = global.DOM.$selectSubDepartment;
 
-            this.$btnNewTransaction = global.DOM.$btnNewTransaction;
-            this.$btnCloseTransaction = global.DOM.$btnCloseTransaction;
+            this.$btnNewOrder = global.DOM.$btnNewOrder;
+            this.$btnCloseOrder = global.DOM.$btnCloseOrder;
 
             this.$kTOrders.event.focus(null, null, function (node, x, y) {
                 global.table.currentRowPos = y;
@@ -223,13 +224,18 @@
                 });
             });
             
-            this.$btnNewTransaction.click(function(){
-                if(global.transactionStatus >=1){
-                    Alerts.showConfirm("", "Are you sure you want to cancel your current transaction and open a new transaction? ", "Yes, Please", "#3c8dbc", function (isConfirm){
+            this.$btnNewOrder.click(function(){
+                if(global.orderStatus >=1){
+                    Alerts.showConfirm("", "Are you sure you want to cancel your current order and open a new order? ", "Yes", "#3c8dbc", function (isConfirm){
                         if (isConfirm) {
-                            global.transactionStatus = 1;
+                            global.orderStatus = 1;
                             self.enableFormInputs();
                             self.clearAllForms();
+                            setTimeout(function(){
+                                self.$txtItemId.focus() 
+                            },400);
+                        }
+                        else{
                             setTimeout(function(){
                                 self.$txtItemId.focus() 
                             },400);
@@ -237,21 +243,17 @@
                     });
                 }
                 else{
-                    Alerts.showConfirm("", "Are you sure you want to open a new transaction? ", "Yes, Please", "#3c8dbc", function (isConfirm){
-                        if (isConfirm) {
-                            global.transactionStatus = 1;
-                            self.enableFormInputs();
-                            self.clearAllForms();
-                            setTimeout(function(){
-                                self.$txtItemId.focus() 
-                            },400);
-                        }
-                    });
+                    global.orderStatus = 1;
+                    self.enableFormInputs();
+                    self.clearAllForms();
+                    setTimeout(function(){
+                        self.$txtItemId.focus();
+                    },400);
                 }
             });
 
-            this.$btnCloseTransaction.click(function(){
-                self.closeTransaction();
+            this.$btnCloseOrder.click(function(){
+                self.closeOrder();
             });
 
     		return this;
@@ -272,7 +274,7 @@
         enableFormInputs: function(){
             var self = this;
 
-            global.DOM.$btnCompleteTransaction.removeAttr("disabled");
+            global.DOM.$btnCompleteOrder.removeAttr("disabled");
             global.DOM.$chooseItemsFormInputs.not("#item_description").prop("disabled", false);
             global.DOM.$chooseOrdersOptions.not("#order_grand_total").prop("disabled", false);
             self.$selectDepartment.trigger("chosen:updated");
@@ -282,41 +284,57 @@
         disableFormInputs: function(){
             var self = this;   
             
-            global.DOM.$btnCompleteTransaction.attr("disabled","disabled");
+            global.DOM.$btnCompleteOrder.attr("disabled","disabled");
             global.DOM.$chooseItemsFormInputs.prop("disabled", true);
             global.DOM.$chooseOrdersOptions.prop("disabled", true);
             self.$selectDepartment.trigger("chosen:updated");
             self.$selectSubDepartment.trigger("chosen:updated");
         },
 
-        transactionExist: function(){
+        orderExist: function(){
             var self = this;
 
-            if(global.transactionStatus >= 1){
+            if(global.orderStatus >= 1){
                 return true;
             }   
             else{
                 self.$kTOrders.fnBlur();
-                Alerts.showWarning("", "There is currently no transaction. Please start a new transaction.");
+                Alerts.showWarning("", "There is currently no order. Please start a new order.");
             }
         },
 
-        closeTransaction: function (){
+        closeOrder: function (){
             var self = this;
 
-            if(global.transactionStatus == 0){
+            if(global.orderStatus == 0){
                 self.disableFormInputs();
                 self.clearAllForms();
             }
-            else if(global.transactionFinish){
-                self.disableFormInputs();
-            }
-            else if(global.transactionStatus == 1){
-                Alerts.showConfirm("", "Are you sure you want to cancel this transaction? ", "Yes, Please", "#3c8dbc", function (isConfirm){
+            else if(global.orderFinish){
+                Alerts.showConfirm("", "Are you sure you want to cancel this order? ", "Yes", "#3c8dbc", function (isConfirm){
                     if(isConfirm){
-                        global.transactionStatus = 0;
+                        global.orderStatus = 0;
                         self.disableFormInputs();
                         self.clearAllForms();
+                    }
+                    else{
+                        setTimeout(function(){
+                            self.$txtItemId.focus() 
+                        },400);
+                    }
+                });
+            }
+            else if(global.orderStatus == 1){
+                Alerts.showConfirm("", "Are you sure you want to cancel this order? ", "Yes", "#3c8dbc", function (isConfirm){
+                    if(isConfirm){
+                        global.orderStatus = 0;
+                        self.disableFormInputs();
+                        self.clearAllForms();
+                    }
+                    else{
+                        setTimeout(function(){
+                            self.$txtItemId.focus() 
+                        },400);
                     }
                 });
             }
@@ -349,7 +367,7 @@
                 indexView.$kTOrders.event.action(this, function (nCell) {
                     indexView.$kTOrders.event.remove.focus(nCell);
                     indexView.$kTOrders.block = true;
-                    if(indexView.transactionExist()){
+                    if(indexView.orderExist()){
 
                         $(nCell).editable(function (sVal) {
                             indexView.$kTOrders.block = false;
@@ -411,54 +429,60 @@
                 var quantity = indexView.$txtItemQuantity.val();
                 if(itemId){
                     if(quantity){
-                        model.getItem(itemId).done(function (item){
-                            if(item.status == undefined){
-                                var itemExistInTheList = false;
-                                var ordersList = [];
-                                var orders = indexView.$dtOrders.rows().data();
+                        if(quantity <= 0 || isNaN(quantity)){
+                            toastr.info('Please enter a valid quantity.');
+                            indexView.$txtItemQuantity.focus();
+                        }
+                        else{
+                            model.getItem(itemId).done(function (item){
+                                if(item.status == undefined){
+                                    var itemExistInTheList = false;
+                                    var ordersList = [];
+                                    var orders = indexView.$dtOrders.rows().data();
 
-                                for(var i=0; i<orders.length; i++){
-                                    if(indexView.$dtOrders.row(i).data()[0] == item.id){
-                                        ordersList = indexView.$dtOrders.row(i);
-                                        itemExistInTheList = true;
-                                        break;
+                                    for(var i=0; i<orders.length; i++){
+                                        if(indexView.$dtOrders.row(i).data()[0] == item.id){
+                                            ordersList = indexView.$dtOrders.row(i);
+                                            itemExistInTheList = true;
+                                            break;
+                                        }
                                     }
-                                }
 
-                                if(itemExistInTheList){
-                                    quantity = parseInt(quantity) + parseInt(ordersList.data()[2])
-                                    ordersList.data([
-                                        item.id,
-                                        item.description,
-                                        numeral(quantity).format("0"),
-                                        numeral(item.price).format("0.00"),
-                                        numeral(item.price * quantity).format("0.00"),
-                                        indexView.$renderBtnDelete
-                                    ]);
-                                    indexView.$dtOrders.draw(false);
+                                    if(itemExistInTheList){
+                                        quantity = parseInt(quantity) + parseInt(ordersList.data()[2])
+                                        ordersList.data([
+                                            item.id,
+                                            item.description,
+                                            numeral(quantity).format("0"),
+                                            numeral(item.price).format("0.00"),
+                                            numeral(item.price * quantity).format("0.00"),
+                                            indexView.$renderBtnDelete
+                                        ]);
+                                        indexView.$dtOrders.draw(false);
+                                    }
+                                    else{
+                                        indexView.$dtOrders.row.add([
+                                            item.id,
+                                            item.description,
+                                            numeral(quantity).format("0"),
+                                            numeral(item.price).format("0.00"),
+                                            numeral(item.price * quantity).format("0.00"),
+                                            indexView.$renderBtnDelete
+                                        ]);
+                                        indexView.$dtOrders.draw(false);
+                                    }
+
+                                    indexView.$txtOrdersGrandTotal.val(indexView.getGrandTotal());
+                                    self.$chooseItemForm[0].reset();
+                                    indexView.$txtItemId.focus();
                                 }
                                 else{
-                                    indexView.$dtOrders.row.add([
-                                        item.id,
-                                        item.description,
-                                        numeral(quantity).format("0"),
-                                        numeral(item.price).format("0.00"),
-                                        numeral(item.price * quantity).format("0.00"),
-                                        indexView.$renderBtnDelete
-                                    ]);
-                                    indexView.$dtOrders.draw(false);
+                                    toastr.info('Item not found. Please select another item.');
+                                    indexView.$txtItemId.focus();
+                                    global.DOM.$chooseItemForm[0].reset();
                                 }
-
-                                indexView.$txtOrdersGrandTotal.val(indexView.getGrandTotal());
-                                self.$chooseItemForm[0].reset();
-                                indexView.$txtItemId.focus();
-                            }
-                            else{
-                                toastr.info('Item not found. Please select another item.');
-                                indexView.$txtItemId.focus();
-                                global.DOM.$chooseItemForm[0].reset();
-                            }
-                        });
+                            });
+                        }
                     }
                     else{
                         toastr.info('Please enter a quantity.');
@@ -488,7 +512,7 @@
             var self = this;
 
             this.$tableBody.on('click', self.btnDeleteElementId, function () {
-                if(indexView.transactionExist()){
+                if(indexView.orderExist()){
                     indexView.$dtOrders.row($(this).parents('tr')).remove().draw();
                 }
             });
@@ -497,10 +521,10 @@
         }
     }
 
-    var completeTransactionView = {
+    var completeOrderView = {
         init: function(){
 
-            this.$btnCompleteTransaction = global.DOM.$btnCompleteTransaction;
+            this.$btnCompleteOrder = global.DOM.$btnCompleteOrder;
 
             return this;
         },
@@ -508,8 +532,8 @@
         render: function(){
             var self = this;
 
-            this.$btnCompleteTransaction.click(function(){
-                if(indexView.transactionExist()){
+            this.$btnCompleteOrder.click(function(){
+                if(indexView.orderExist()){
                     if(indexView.$dtOrders.rows().data().length >= 1){
                         if(global.DOM.$selectDepartment.val() !== null && global.DOM.$selectSubDepartment.val() !== null){
                             var ordersList = indexView.$dtOrders.rows().data();
@@ -546,13 +570,12 @@
                                 sub_department: $("#select_sub_department option:selected").text()
                             });                            
                         
-                            Alerts.showConfirm("", "Are you sure you want to complete this transaction? ", "Yes, Please", "#3c8dbc", function (isConfirm){
+                            Alerts.showConfirm("", "Are you sure you want to complete this order? ", "Yes", "#3c8dbc", function (isConfirm){
                                 if (isConfirm) {
                                     model.post(orderDetails).done(function(orders){
                                         indexView.disableFormInputs();
-                                        Alerts.showSuccess("", "Transaction Completed!. <br>Your Order Reference # is <strong>"+ orderReferenceNO + "</strong>");
-                                        global.transactionStatus = 0;
-                                        global.transactionFinish = true;
+                                        global.orderStatus = 0;
+                                        global.orderFinish = true;
 
                                         model.getSettings().done(function(settings){
                                             for(var i=0; i<settings.length; i++){
@@ -564,15 +587,20 @@
                                             }
                                             
                                             model.sendEmail(orderedItems, orderInfos, emailSettings).done(function(orders){
-                                                console.log(orders);
+                                                Alerts.showSuccess("", "Order Completed!. <br>Your Order Reference # is <strong>"+ orderReferenceNO + "</strong>");
                                             });
                                         });
                                     });
                                 }
+                                else{
+                                    setTimeout(function(){
+                                        indexView.$txtItemId.focus() 
+                                    },400);
+                                }
                             }); 
                         }
                         else{
-                            Alerts.showWarning("", "Please select your desire department and sub-departments.");
+                            Alerts.showWarning("", "Please select your department and sub department.");
                         }
                     }
                     else{
@@ -597,11 +625,11 @@
             this.$tableBody = $("#select_items_table tbody");
             this.$dtItems = this.$selectItemsTable.DataTable({
                 "columns": [
-                    { "sClass": "text-left font-bold", "sWidth": "20%" },
-                    { "sClass": "text-left font-bold", "sWidth": "60%" },
-                    { "sClass": "text-left font-bold", "sWidth": "20%" }
+                    { "sClass": "text-left font-bold", "sWidth": "30%" },
+                    { "sClass": "text-left font-bold", "sWidth": "70%" },
+                    { "sClass": "text-left font-bold", "sWidth": "0%" , visible: false}
                 ],
-                // responsive: true,
+                responsive: false,
                 "bAutoWidth": false,
                 "bLengthChange": false,
                 "iDisplayLength": 7,
