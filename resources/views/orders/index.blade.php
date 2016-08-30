@@ -16,7 +16,7 @@
 	                            <input type="text" id="item_id" class="form-control" placeholder="Item ID.">
 	                        </div>
 	                        <div class="col-lg-6" style="padding-right: 0px;">
-	                            <input type="text" id="item_description" class="form-control" placeholder="..." disabled>
+	                            <input type="text" id="item_description" class="form-control" placeholder="Description" disabled>
 	                        </div>
 	                        <div class="col-lg-2" style="padding-right: 0px;">
 	                            <input type="number" id="item_quantity" class="form-control" placeholder="Quantity">

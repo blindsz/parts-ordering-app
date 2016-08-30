@@ -18,6 +18,15 @@
             return deferred.promise();
         },
 
+        getItemByDescription: function (description){
+            var deferred = $.Deferred();
+            $.get(BASE_URL + "items/item_get_by_description/" + description + " ", { }, function (data) {
+                deferred.resolve(data);
+            });
+
+            return deferred.promise();
+        },
+
         getAllDepartments: function(){
             var deferred = $.Deferred();
             $.get(BASE_URL + "departments/departments_get", { }, function (data) {
@@ -200,6 +209,24 @@
                 });
             });
 
+            this.$txtItemDescription.on('input', function(){
+                 model.getItemByDescription($(this).val()).done(function(item){
+                    if(item.length <= 1) {
+                        if(item.length !== 0){
+                            self.$txtItemId.val(item[0].id);
+                            self.$txtItemId.val(item[0].description);
+                        }
+                        else{
+                            self.$txtItemId.val('');
+                        }
+                    }
+                    else{
+                        toastr.info('Item description has a duplicate in other items');
+                        self.$txtItemId.val('');
+                    }
+                 });
+            });
+
             this.$selectDepartment.chosen().change(function() {
                 model.getDepartment($(this).val()).done(function (department){
                     var subDepartmentIds = (department.sub_department_ids == 0) ? JSON.parse("null") : JSON.parse(department.sub_department_ids);
@@ -275,7 +302,7 @@
             var self = this;
 
             global.DOM.$btnCompleteOrder.removeAttr("disabled");
-            global.DOM.$chooseItemsFormInputs.not("#item_description").prop("disabled", false);
+            global.DOM.$chooseItemsFormInputs.prop("disabled", false);
             global.DOM.$chooseOrdersOptions.not("#order_grand_total").prop("disabled", false);
             self.$selectDepartment.trigger("chosen:updated");
             self.$selectSubDepartment.trigger("chosen:updated");

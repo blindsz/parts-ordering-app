@@ -22,4 +22,13 @@ class ItemsController extends Controller {
             return array('status'=> '0');
         }
    	}
+
+    public function item_get_by_description($description){
+        if(Item::where('description', $description)->get()){
+            return Item::where('description', $description)->get();
+        }
+        else{
+            return array('status'=> '0');
+        }
+    }
 }

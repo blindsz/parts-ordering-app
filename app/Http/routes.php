@@ -152,6 +152,12 @@ Route::get('/items/item/{id}', [
 	'as' => 'get_item_by_id'
 ]);
 
+Route::get('/items/item_get_by_description/{description}', [
+	'uses' => 'ItemsController@item_get_by_description', 
+	'as' => 'get_item_by_by_description'
+]);
+
+
 /*
 |--------------------------------------------------------------------------
 | User Levels
