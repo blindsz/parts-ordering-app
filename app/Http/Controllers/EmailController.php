@@ -22,10 +22,11 @@ class EmailController extends Controller {
 
     	$email_settings = $request->input('emailSettings');
 
-    	Mail::send("email.index", $email_data, function ($message) 
+    	Mail::send("email.index", $email_data, function ($message)
+
     		use ($email_settings) {
-            $message->to($email_settings[1]['email'], $email_settings[1]['name'])
-            		->from($email_settings[0]['email'], $email_settings[0]['name'])
+
+            $message->to($email_settings[0]['email'], $email_settings[0]['name'])
             		->subject('You have a new order!');
         });
     }

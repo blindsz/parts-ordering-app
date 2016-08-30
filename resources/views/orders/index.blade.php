@@ -98,9 +98,11 @@
 						</div>
 						<span>Note: You need to open a new order before you can proceed.</span>
         			</div>
+        			<div class="overlay" id="overlay">
+			            <i class="fa fa-refresh fa-spin"></i>
+			        </div>
       			</div>
             </div>
-            
         </div>
     </section>
 

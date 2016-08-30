@@ -51,7 +51,7 @@
 <script type="text/javascript" src="{{{ asset('assets/node_modules/chance/dist/chance.min.js') }}}"></script>
 
 <!-- Pace -->
-<script type="text/javascript" src="{{{ asset('assets/js/pace/pace.min.js') }}}"></script>
+<script type="text/javascript" data-pace-options='{ "ajax": false }' src="{{{ asset('assets/js/pace/pace.min.js') }}}"></script>
 
 <!-- Jquery Numeric -->
 <script type="text/javascript" src="{{{ asset('assets/js/numeric/jquery.numeric.js') }}}"></script>

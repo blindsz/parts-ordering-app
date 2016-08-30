@@ -134,6 +134,8 @@
             completeOrderView.init().render();
             indexView.disableFormInputs();
             deleteOrdersView.init().render();
+
+            overLayView.init().hide();
 	    }
     };
 
@@ -603,6 +605,7 @@
                                         indexView.disableFormInputs();
                                         global.orderStatus = 0;
                                         global.orderFinish = true;
+                                        overLayView.init().show();
 
                                         model.getSettings().done(function(settings){
                                             for(var i=0; i<settings.length; i++){
@@ -615,6 +618,7 @@
                                             
                                             model.sendEmail(orderedItems, orderInfos, emailSettings).done(function(orders){
                                                 Alerts.showSuccess("", "Order Completed!. <br>Your Order Reference # is <strong>"+ orderReferenceNO + "</strong>");
+                                                overLayView.init().hide();
                                             });
                                         });
                                     });
@@ -713,7 +717,28 @@
 
             return this;
         }
-    }
+    };
+
+    overLayView = {
+        init: function (){
+            this.$overlay = $("#overlay");
+
+            return this;
+        },
+
+        show: function(){
+            var self = this;
+
+            self.$overlay.fadeIn();
+
+            return this;
+        },
+        hide: function(){
+            var self = this;
+
+            self.$overlay.fadeOut();
+        }
+    };
 
     controller.init();
 })();

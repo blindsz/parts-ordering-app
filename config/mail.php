@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'from' => ['address' => null, 'name' => null],
+    'from' => ['address' => 'masterspas001@gmail.com', 'name' => 'Master Spa - Ordering App'],
 
     /*
     |--------------------------------------------------------------------------

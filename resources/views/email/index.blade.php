@@ -34,11 +34,11 @@
 	    				<tbody>
 	        			@foreach($orderedItems as $orderedItem)
 	        				<tr>
-	      						<td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{ $orderedItem['quantity'] }}</td> 	              						
-	      						<td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{ $orderedItem['item_id'] }}</td>
-	              				<td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{ $orderedItem['item_description'] }}</td>
-	              				<td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{ $orderedItem['item_price'] }}</td>
-	              				<td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{ $orderedItem['item_total_price'] }}</td>
+	      						<td style="border: 1px solid #dddddd; text-align: center; padding: 8px;">{{ $orderedItem['quantity'] }}</td> 	              						
+	      						<td style="border: 1px solid #dddddd; text-align: center; padding: 8px;">{{ $orderedItem['item_id'] }}</td>
+	              				<td style="border: 1px solid #dddddd; text-align: center; padding: 8px;">{{ $orderedItem['item_description'] }}</td>
+	              				<td style="border: 1px solid #dddddd; text-align: center; padding: 8px;">{{ $orderedItem['item_price'] }}</td>
+	              				<td style="border: 1px solid #dddddd; text-align: center; padding: 8px;">{{ $orderedItem['item_total_price'] }}</td>
 	        				</tr>
 						@endforeach
 	    				</tbody>
@@ -46,7 +46,8 @@
 				</div>
 			</div>
 			<div>
-				<div> 151 N. Michigan Ave., Unit #811 • Chicago<br></div>
+				<br><br>
+				<div> 6927 Lincoln Parkway Fort Wayne, IN 46804 260-436-9100<br></div>
 			</div>
 		</div>
 	</div>
