@@ -27,7 +27,7 @@ class EmailController extends Controller {
     		use ($email_settings) {
 
             $message->to($email_settings[0]['email'], $email_settings[0]['name'])
-            		->subject('You have a new order!');
+            		->subject('Master Spas Ordering App');
         });
     }
 }
