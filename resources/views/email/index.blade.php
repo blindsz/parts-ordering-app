@@ -12,7 +12,7 @@
 				          	<b style="line-height: 2; font-weight:normal;">Sub-Department:</b><b> {{ $orderInfo['sub_department'] }} </b><br>
 				        </div>
 				        <div class="col-sm-4 invoice-col" style="width:49%; display:inline-block; text-align:right;">
-				          	
+				          	<b style="line-height: 2; font-weight:normal;">Date:</b><b> {{ date("Y/m/d") }} </b><br>
 				        </div>
 					</div>
 				@endforeach

@@ -156,7 +156,7 @@
 
             this.$dtOrders = global.DOM.$tableOrders.DataTable({
                 "columns": [
-                    { "sClass": "text-left font-bold", "sWidth": "0%" },
+                    { "sClass": "text-left font-bold", "sWidth": "0%" , "visible":false},
                     { "sClass": "text-left font-bold", "sWidth": "20%" },
                     { "sClass": "text-left font-bold", "sWidth": "60%" },
                     { "sClass": "text-left font-bold quantity editable", "sWidth": "12%" },
@@ -415,32 +415,79 @@
         render: function(){
             var self = this;
 
-            indexView.$txtItemNo.on('input', function() {
-                model.getItemByItemNo($(this).val()).done(function(item){
-                    if(item.status === undefined){
+            model.getAllItems().done(function (items){
+                var optionsTxtItemNo = {
+                    data: items,
+                    template: {
+                        type: "description",
+                        fields: {description: "description"}
+                    },
+                    getValue: "item_no",
+                    list: {
+                        match: { enabled: true },
+                        onChooseEvent: function() {
+                            model.getItemByItemNo(indexView.$txtItemNo.val()).done(function(item){
+                                indexView.$txtItemId.val(item.id);
+                                indexView.$txtItemNo.val(item.item_no);
+                                indexView.$txtItemDescription.val(item.description);
+                                indexView.$txtItemQuantity.focus();
+                            });
+                        }
+                    }
+                };
+
+                var optionsTxtItemDescription = {
+                    data: items,
+                    template: {
+                        type: "description",
+                        fields: {description: "item_no"}
+                    },
+                    getValue: "description",
+                    list: {
+                        match: { enabled: true },
+                        onChooseEvent: function() {
+                            model.getItemByDescription(indexView.$txtItemDescription.val()).done(function(item){
+                                indexView.$txtItemId.val(item.id);
+                                indexView.$txtItemNo.val(item.item_no);
+                                indexView.$txtItemDescription.val(item.description);
+                                indexView.$txtItemQuantity.focus();
+                            });
+                        }
+                    }
+                };
+
+                indexView.$txtItemNo.easyAutocomplete(optionsTxtItemNo);
+                indexView.$txtItemDescription.easyAutocomplete(optionsTxtItemDescription);
+            });
+    
+            indexView.$txtItemNo.focusout(function() {
+                model.getItemByItemNo(indexView.$txtItemNo.val()).done(function(item){
+                    if(item.status !== undefined){
+                        indexView.$txtItemDescription.val('');
+                        indexView.$txtItemId.val('');
+                    }
+                    else{
                         indexView.$txtItemId.val(item.id);
                         indexView.$txtItemNo.val(item.item_no);
                         indexView.$txtItemDescription.val(item.description);
-                    }
-                    else{
-                        indexView.$txtItemDescription.val('');
-                        indexView.$txtItemId.val('');
+                        indexView.$txtItemQuantity.focus();
                     }
                 });
             });
 
-            indexView.$txtItemDescription.on('input', function(){
-                 model.getItemByDescription($(this).val()).done(function(item){
-                    if(item.status === undefined){
-                        indexView.$txtItemId.val(item.id);
-                        indexView.$txtItemNo.val(item.item_no);
-                        indexView.$txtItemDescription.val(item.description);
-                    }
-                    else{
+            indexView.$txtItemDescription.focusout(function() {
+                model.getItemByDescription(indexView.$txtItemDescription.val()).done(function(item){
+                    if(item.status !== undefined){
                         indexView.$txtItemId.val('');
                         indexView.$txtItemNo.val('');
                     }
-                 });
+                    else{
+                        indexView.$txtItemId.val(item.id);
+                        indexView.$txtItemNo.val(item.item_no);
+                        indexView.$txtItemDescription.val(item.description);
+                        indexView.$txtItemQuantity.focus();
+                    }
+                });
             });
 
             this.$btnSearchOption.click(function (){
@@ -509,7 +556,7 @@
                                         addItemView.txtFocus();
                                         global.DOM.$chooseItemForm[0].reset();
                                     }
-                                });
+                                }); 
                             }
                             else{
                                 toastr.info('Please enter a valid quantity.');
@@ -574,28 +621,6 @@
             }
         }
     };
-
-    var deleteOrdersView = {
-        init: function(){
-            this.$btnDeleteOrder = global.DOM.$btnDeleteOrder;
-            this.$tableBody = $('#orders_table tbody');
-            this.btnDeleteElementId = "#btn_delete_orders";
-
-            return this;
-        },
-
-        render: function(){
-            var self = this;
-
-            this.$tableBody.on('click', self.btnDeleteElementId, function () {
-                if(indexView.orderExist()){
-                    indexView.$dtOrders.row($(this).parents('tr')).remove().draw();
-                }
-            });
-
-            return this;
-        }
-    }
 
     var completeOrderView = {
         init: function(){
@@ -673,7 +698,7 @@
                             }); 
                         }
                         else{
-                            Alerts.showWarning("", "Please select your department and sub department.");
+                            Alerts.showWarning("", "Please select your department and sub department.");                            
                         }
                     }
                     else{
@@ -689,6 +714,28 @@
             return this;
         }
     };
+
+    var deleteOrdersView = {
+        init: function(){
+            this.$btnDeleteOrder = global.DOM.$btnDeleteOrder;
+            this.$tableBody = $('#orders_table tbody');
+            this.btnDeleteElementId = "#btn_delete_orders";
+
+            return this;
+        },
+
+        render: function(){
+            var self = this;
+
+            this.$tableBody.on('click', self.btnDeleteElementId, function () {
+                if(indexView.orderExist()){
+                    indexView.$dtOrders.row($(this).parents('tr')).remove().draw();
+                }
+            });
+
+            return this;
+        }
+    }
 
     var selectItemsView = {
         init: function(){
@@ -715,6 +762,10 @@
 
         render: function (){
             var self = this;
+
+            self.$selectItemsModal.on('hide.bs.modal', function () {
+                addItemView.txtFocus();
+            });
 
             this.$btnChooseItems.click(function (){
                 self.$selectItemsModal.modal("show");

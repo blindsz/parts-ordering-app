@@ -55,3 +55,6 @@
 
 <!-- Jquery Numeric -->
 <script type="text/javascript" src="{{{ asset('assets/js/numeric/jquery.numeric.js') }}}"></script>
+
+<!-- autocomplete -->
+<script type="text/javascript" src="{{{ asset('assets/js/autocomplete/jquery.easy-autocomplete.min.js') }}}"></script>

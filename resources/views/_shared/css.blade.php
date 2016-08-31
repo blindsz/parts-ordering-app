@@ -24,3 +24,7 @@
 
 <!-- pace -->
 <link rel="stylesheet" href="{{{ asset('assets/css/pace/pace.min.css') }}}">
+
+<!-- autocomplete -->
+<link rel="stylesheet" href="{{{ asset('assets/css/autocomplete/easy-autocomplete.min.css') }}}">
+<link rel="stylesheet" href="{{{ asset('assets/css/autocomplete/easy-autocomplete.themes.min.css') }}}">
