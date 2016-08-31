@@ -12,10 +12,14 @@
             	<div class="box with-no-border-top">
             		 <form id="frm_choose_items">
 						<div class="box-header">
-	          				<div class="col-lg-2" style="padding-right: 0px; padding-left:5px;">
-	                            <input type="text" id="item_id" class="form-control" placeholder="Item ID.">
+							<div class="col-lg-2" style="padding-left:0px;">
+								<button type="button" class="btn btn-default btn-block" id="btn_search_option" title="Search Item"><strong><span class="fa fa-search-plus"></span> <span class="item_no" id="txt_search_option">Item No</span></strong></button>
+							</div>
+	          				<div class="col-lg-2" style="padding-right: 0px; padding-left:0px;">
+	          					<input type="hidden" id="item_id" class="form-control">
+	                            <input type="text" id="item_no" class="form-control" placeholder="Item No">
 	                        </div>
-	                        <div class="col-lg-6" style="padding-right: 0px;">
+	                        <div class="col-lg-4" style="padding-right: 0px;">
 	                            <input type="text" id="item_description" class="form-control" placeholder="Description" disabled>
 	                        </div>
 	                        <div class="col-lg-2" style="padding-right: 0px;">
@@ -40,11 +44,10 @@
 	          				<table id="orders_table" class="table" cellspacing="0" width="100%">
 		                        <thead>
 		                            <tr>
-		                                <th>Item ID</th>
+		                                <th>ID</th>
+		                                <th>Item No</th>
 		                                <th>Description</th>
 		                                <th>Qty</th>
-		                                <th>Price</th>
-		                                <th>Total</th>
 		                                <th></th>
 		                            </tr>
 		                        </thead>
@@ -70,8 +73,7 @@
 									</select>
 								</div>
 								<div class="form-group">
-									<label for="grand_total">Grand Total:</label>
-									<input id="order_grand_total" type="text" name="order_grand_total" class="form-control text-right resettable">
+									<br><br>
 								</div>
 							</form>
 							<div class="form-group">
@@ -96,7 +98,11 @@
 								</div>
 							</div>
 						</div>
-						<span>Note: You need to open a new order before you can proceed.</span>
+						<div class="row">
+							<div class="col-lg-12">
+							<span>Note: You need to open a new order before you can proceed.</span>
+							</div>
+						</div>
         			</div>
         			<div class="overlay" id="overlay">
 			            <i class="fa fa-refresh fa-spin"></i>
@@ -122,8 +128,8 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
+                                    <th>Item No</th>
                                     <th>Description</th>
-                                    <th>Price</th>
                                 </tr>
                             </thead>
                             <tbody>

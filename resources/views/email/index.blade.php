@@ -7,12 +7,12 @@
 				@foreach($orderInfos as $orderInfo)
 					<div class="row invoice-info">
 				        <div class="col-sm-4 invoice-col" style="width:49%; display:inline-block;">
-				          	<b style="line-height: 2; font-weight:normal;">Order Reference No:</b><b> {{ $orderInfo['order_reference_no'] }} </b><br>
+				          	<b style="line-height: 2; font-weight:normal;">Reference No:</b><b> {{ $orderInfo['order_reference_no'] }} </b><br>
 				          	<b style="line-height: 2; font-weight:normal;">Department: </b><b>  {{ $orderInfo['department'] }} </b><br>
 				          	<b style="line-height: 2; font-weight:normal;">Sub-Department:</b><b> {{ $orderInfo['sub_department'] }} </b><br>
 				        </div>
 				        <div class="col-sm-4 invoice-col" style="width:49%; display:inline-block; text-align:right;">
-				          	<b style="font-size:20px; font-weight:normal;">Grand Total:</b><b style="font-size:20px;"> {{ $orderInfo['grand_total'] }}  </b><br>
+				          	
 				        </div>
 					</div>
 				@endforeach
@@ -24,21 +24,17 @@
 	  				<table class="table table-striped" style="background-color:#fff; font-family: arial, sans-serif; border-collapse: collapse; min-width: 200px; margin: 0px auto; width: 100%;"> 
 	    				<thead>
 	    					<tr>
-				              	<th style="border: 1px solid #dddddd; text-align: center; padding: 8px; width: 8%;">Qty</th>
-				              	<th style="border: 1px solid #dddddd; text-align: center; padding: 8px; width: 15%;">Item ID</th>
-				              	<th style="border: 1px solid #dddddd; text-align: center; padding: 8px; width: 47%;">Description</th>
-				              	<th style="border: 1px solid #dddddd; text-align: center; padding: 8px; width: 15%;">Price</th>
-				              	<th style="border: 1px solid #dddddd; text-align: center; padding: 8px; width: 15%;">Total Price</th>
+				              	<th style="border: 1px solid #dddddd; text-align: center; padding: 8px; width: 10%;">Qty</th>
+				              	<th style="border: 1px solid #dddddd; text-align: center; padding: 8px; width: 20%;">Item No</th>
+				              	<th style="border: 1px solid #dddddd; text-align: center; padding: 8px; width: 70%;">Description</th>
 	    					</tr>
 	    				</thead>
 	    				<tbody>
 	        			@foreach($orderedItems as $orderedItem)
 	        				<tr>
 	      						<td style="border: 1px solid #dddddd; text-align: center; padding: 8px;">{{ $orderedItem['quantity'] }}</td> 	              						
-	      						<td style="border: 1px solid #dddddd; text-align: center; padding: 8px;">{{ $orderedItem['item_id'] }}</td>
+	      						<td style="border: 1px solid #dddddd; text-align: center; padding: 8px;">{{ $orderedItem['item_no'] }}</td>
 	              				<td style="border: 1px solid #dddddd; text-align: center; padding: 8px;">{{ $orderedItem['item_description'] }}</td>
-	              				<td style="border: 1px solid #dddddd; text-align: center; padding: 8px;">{{ $orderedItem['item_price'] }}</td>
-	              				<td style="border: 1px solid #dddddd; text-align: center; padding: 8px;">{{ $orderedItem['item_total_price'] }}</td>
 	        				</tr>
 						@endforeach
 	    				</tbody>

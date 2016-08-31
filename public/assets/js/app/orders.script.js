@@ -18,6 +18,15 @@
             return deferred.promise();
         },
 
+        getItemByItemNo: function (item_no){
+            var deferred = $.Deferred();
+            $.get(BASE_URL + "items/item_get_by_item_no/" + item_no + " ", { }, function (data) {
+                deferred.resolve(data);
+            });
+
+            return deferred.promise();
+        },
+
         getItemByDescription: function (description){
             var deferred = $.Deferred();
             $.get(BASE_URL + "items/item_get_by_description/" + description + " ", { }, function (data) {
@@ -98,16 +107,17 @@
             $btnCloseOrder: $("#btn_close_order"),
             $btnCompleteOrder: $("#btn_complete_order"),
             $btnDeleteOrder: $("#btn_delete_orders"),
+            $btnSearchOption: $("#btn_search_option"),
             $chooseItemsFormInputs: $("#frm_choose_items :input"),
             $chooseOrdersOptions: $("#frm_choose_options :input"),
             $chooseOrdersOptionsForm: $("#frm_choose_options"),
             $chooseItemForm: $("#frm_choose_items"),
             $selectDepartment: $("#select_department"),
             $selectSubDepartment: $("#select_sub_department"),
+            $txtItemNo: $("#item_no"),
             $txtItemId: $("#item_id"),
             $txtItemDescription: $("#item_description"),
             $txtItemQuantity: $("#item_quantity"),
-            $txtOrdersGrandTotal: $("#order_grand_total"),
             $btnAddItem: $("#add_item")
         },
 
@@ -146,11 +156,10 @@
 
             this.$dtOrders = global.DOM.$tableOrders.DataTable({
                 "columns": [
-                    { "sClass": "text-left font-bold", "sWidth": "15%" },
-                    { "sClass": "text-left font-bold", "sWidth": "64%" },
-                    { "sClass": "text-left font-bold quantity editable", "sWidth": "13%" },
-                    { "sClass": "text-left font-bold", "sWidth": "15%" , "visible": false},
-                    { "sClass": "text-left font-bold", "sWidth": "15%" , "visible": false},
+                    { "sClass": "text-left font-bold", "sWidth": "0%" },
+                    { "sClass": "text-left font-bold", "sWidth": "20%" },
+                    { "sClass": "text-left font-bold", "sWidth": "60%" },
+                    { "sClass": "text-left font-bold quantity editable", "sWidth": "12%" },
                     { "sClass": "text-left font-bold", "sWidth": "8%" },
                 ],
                 responsive: false,
@@ -167,10 +176,10 @@
             this.$dtApi = global.DOM.$tableOrders.dataTable();
             this.$kTOrders = new $.fn.dataTable.KeyTable(global.DOM.$tableOrders.dataTable());
 
+            this.$txtItemNo = global.DOM.$txtItemNo;
             this.$txtItemId = global.DOM.$txtItemId;
             this.$txtItemDescription = global.DOM.$txtItemDescription;
             this.$txtItemQuantity = global.DOM.$txtItemQuantity;
-            this.$txtOrdersGrandTotal = global.DOM.$txtOrdersGrandTotal;
             this.$selectDepartment = global.DOM.$selectDepartment;
             this.$selectSubDepartment = global.DOM.$selectSubDepartment;
 
@@ -197,36 +206,6 @@
                     );
                 }
                 self.$selectDepartment.trigger("chosen:updated");
-            });
-
-            this.$txtItemId.on('input', function() { 
-                model.getItem($(this).val()).done(function(item){
-                    if(item.status === undefined){
-                        self.$txtItemId.val(item.id);
-                        self.$txtItemDescription.val(item.description);
-                    }
-                    else{
-                        self.$txtItemDescription.val('');
-                    }
-                });
-            });
-
-            this.$txtItemDescription.on('input', function(){
-                 model.getItemByDescription($(this).val()).done(function(item){
-                    if(item.length <= 1) {
-                        if(item.length !== 0){
-                            self.$txtItemId.val(item[0].id);
-                            self.$txtItemId.val(item[0].description);
-                        }
-                        else{
-                            self.$txtItemId.val('');
-                        }
-                    }
-                    else{
-                        toastr.info('Item description has a duplicate in other items');
-                        self.$txtItemId.val('');
-                    }
-                 });
             });
 
             this.$selectDepartment.chosen().change(function() {
@@ -260,14 +239,10 @@
                             global.orderStatus = 1;
                             self.enableFormInputs();
                             self.clearAllForms();
-                            setTimeout(function(){
-                                self.$txtItemId.focus() 
-                            },400);
+                            addItemView.txtFocus();
                         }
                         else{
-                            setTimeout(function(){
-                                self.$txtItemId.focus() 
-                            },400);
+                            addItemView.txtFocus();
                         }
                     });
                 }
@@ -275,9 +250,7 @@
                     global.orderStatus = 1;
                     self.enableFormInputs();
                     self.clearAllForms();
-                    setTimeout(function(){
-                        self.$txtItemId.focus();
-                    },400);
+                    addItemView.txtFocus();
                 }
             });
 
@@ -288,26 +261,18 @@
     		return this;
     	},
 
-        getGrandTotal: function(){
-            var self = this;
-            var grandTotal = 0;
-            var orders = self.$dtOrders.rows().data();
-
-            for(var i=0; i<orders.length; i++){
-                grandTotal = parseFloat(numeral(grandTotal).format("0.00")) + parseFloat(numeral(self.$dtOrders.row(i).data()[4]).format("0.00"));
-            }
-
-            return numeral(grandTotal).format("0.00");
-        },
-
         enableFormInputs: function(){
             var self = this;
 
             global.DOM.$btnCompleteOrder.removeAttr("disabled");
-            global.DOM.$chooseItemsFormInputs.prop("disabled", false);
-            global.DOM.$chooseOrdersOptions.not("#order_grand_total").prop("disabled", false);
+            global.DOM.$chooseOrdersOptions.prop("disabled", false);
             self.$selectDepartment.trigger("chosen:updated");
             self.$selectSubDepartment.trigger("chosen:updated");
+
+            if(addItemView.checkSearchOption())
+                global.DOM.$chooseItemsFormInputs.not("#item_description").prop("disabled", false);
+            else
+                global.DOM.$chooseItemsFormInputs.not("#item_no").prop("disabled", false);
         },
 
         disableFormInputs: function(){
@@ -347,9 +312,7 @@
                         self.clearAllForms();
                     }
                     else{
-                        setTimeout(function(){
-                            self.$txtItemId.focus() 
-                        },400);
+                        addItemView.txtFocus();
                     }
                 });
             }
@@ -361,9 +324,7 @@
                         self.clearAllForms();
                     }
                     else{
-                        setTimeout(function(){
-                            self.$txtItemId.focus() 
-                        },400);
+                        addItemView.txtFocus();
                     }
                 });
             }
@@ -408,14 +369,12 @@
                                 ordersList.data([
                                     ordersList.data()[0],
                                     ordersList.data()[1],
+                                    ordersList.data()[2],
                                     numeral(sVal).format("0"),
-                                    numeral(ordersList.data()[3]).format("0.00"),
-                                    numeral(parseFloat(ordersList.data()[3]) * parseFloat(sVal)).format("0.00"),
                                     indexView.$renderBtnDelete
                                 ]);
 
                                 indexView.$dtOrders.draw(false);
-                                indexView.$txtOrdersGrandTotal.val(indexView.getGrandTotal());
                             }
 
                             $(nCell).editable("destroy");
@@ -440,12 +399,15 @@
             });
             return this;
         }
-    }
+    };
 
     var addItemView = {
         init: function(){
             this.$btnAddItem = global.DOM.$btnAddItem;
             this.$chooseItemForm = global.DOM.$chooseItemForm;
+            this.$btnSearchOption = global.DOM.$btnSearchOption;
+
+            this.$txtSearchOption = $("#txt_search_option");
 
             return this;
         },
@@ -453,64 +415,111 @@
         render: function(){
             var self = this;
 
+            indexView.$txtItemNo.on('input', function() {
+                model.getItemByItemNo($(this).val()).done(function(item){
+                    if(item.status === undefined){
+                        indexView.$txtItemId.val(item.id);
+                        indexView.$txtItemNo.val(item.item_no);
+                        indexView.$txtItemDescription.val(item.description);
+                    }
+                    else{
+                        indexView.$txtItemDescription.val('');
+                        indexView.$txtItemId.val('');
+                    }
+                });
+            });
+
+            indexView.$txtItemDescription.on('input', function(){
+                 model.getItemByDescription($(this).val()).done(function(item){
+                    if(item.status === undefined){
+                        indexView.$txtItemId.val(item.id);
+                        indexView.$txtItemNo.val(item.item_no);
+                        indexView.$txtItemDescription.val(item.description);
+                    }
+                    else{
+                        indexView.$txtItemId.val('');
+                        indexView.$txtItemNo.val('');
+                    }
+                 });
+            });
+
+            this.$btnSearchOption.click(function (){
+                if(self.checkSearchOption()){
+                    self.$txtSearchOption.removeClass("item_no").addClass("item_description").text("Description");
+                    indexView.$txtItemNo.attr("disabled","disabled");
+                    indexView.$txtItemDescription.removeAttr("disabled").focus();
+                }
+                else{
+                    self.$txtSearchOption.removeClass("item_description").addClass("item_no").text("Item No");
+                    indexView.$txtItemDescription.attr("disabled","disabled");
+                    indexView.$txtItemNo.removeAttr("disabled").focus();
+                }
+            });
+
             this.$btnAddItem.click(function (){
                 var itemId = indexView.$txtItemId.val();
+                var itemNo = indexView.$txtItemNo.val();
                 var quantity = indexView.$txtItemQuantity.val();
-                if(itemId){
+
+                if(itemNo){
                     if(quantity){
-                        if(quantity <= 0 || isNaN(quantity)){
-                            toastr.info('Please enter a valid quantity.');
-                            indexView.$txtItemQuantity.focus();
-                        }
-                        else{
-                            model.getItem(itemId).done(function (item){
-                                if(item.status == undefined){
-                                    var itemExistInTheList = false;
-                                    var ordersList = [];
-                                    var orders = indexView.$dtOrders.rows().data();
+                        if(itemId){
+                            if(quantity >= 1){
+                                model.getItem(itemId).done(function (item){
+                                    if(item.status == undefined){
+                                        var itemExistInTheList = false;
+                                        var ordersList = [];
+                                        var orders = indexView.$dtOrders.rows().data();
 
-                                    for(var i=0; i<orders.length; i++){
-                                        if(indexView.$dtOrders.row(i).data()[0] == item.id){
-                                            ordersList = indexView.$dtOrders.row(i);
-                                            itemExistInTheList = true;
-                                            break;
+                                        for(var i=0; i<orders.length; i++){
+                                            if(indexView.$dtOrders.row(i).data()[0] == item.id){
+                                                ordersList = indexView.$dtOrders.row(i);
+                                                itemExistInTheList = true;
+                                                break;
+                                            }
                                         }
-                                    }
 
-                                    if(itemExistInTheList){
-                                        quantity = parseInt(quantity) + parseInt(ordersList.data()[2])
-                                        ordersList.data([
-                                            item.id,
-                                            item.description,
-                                            numeral(quantity).format("0"),
-                                            numeral(item.price).format("0.00"),
-                                            numeral(item.price * quantity).format("0.00"),
-                                            indexView.$renderBtnDelete
-                                        ]);
-                                        indexView.$dtOrders.draw(false);
+                                        if(itemExistInTheList){
+                                            quantity = parseInt(quantity) + parseInt(ordersList.data()[3])
+                                            ordersList.data([
+                                                item.id,
+                                                item.item_no,
+                                                item.description,
+                                                numeral(quantity).format("0"),
+                                                indexView.$renderBtnDelete
+                                            ]);
+                                            indexView.$dtOrders.draw(false);
+                                        }
+                                        else{
+                                            indexView.$dtOrders.row.add([
+                                                item.id,
+                                                item.item_no,
+                                                item.description,
+                                                numeral(quantity).format("0"),
+                                                indexView.$renderBtnDelete
+                                            ]);
+                                            indexView.$dtOrders.draw(false);
+                                        }
+
+                                        self.$chooseItemForm[0].reset();
+                                        addItemView.txtFocus();
                                     }
                                     else{
-                                        indexView.$dtOrders.row.add([
-                                            item.id,
-                                            item.description,
-                                            numeral(quantity).format("0"),
-                                            numeral(item.price).format("0.00"),
-                                            numeral(item.price * quantity).format("0.00"),
-                                            indexView.$renderBtnDelete
-                                        ]);
-                                        indexView.$dtOrders.draw(false);
+                                        toastr.info('Item not found. Please select another item.');
+                                        addItemView.txtFocus();
+                                        global.DOM.$chooseItemForm[0].reset();
                                     }
-
-                                    indexView.$txtOrdersGrandTotal.val(indexView.getGrandTotal());
-                                    self.$chooseItemForm[0].reset();
-                                    indexView.$txtItemId.focus();
-                                }
-                                else{
-                                    toastr.info('Item not found. Please select another item.');
-                                    indexView.$txtItemId.focus();
-                                    global.DOM.$chooseItemForm[0].reset();
-                                }
-                            });
+                                });
+                            }
+                            else{
+                                toastr.info('Please enter a valid quantity.');
+                                indexView.$txtItemQuantity.focus();
+                            }
+                        }
+                        else{
+                            toastr.info('Item not found. Please select another item.');
+                            addItemView.txtFocus();
+                            global.DOM.$chooseItemForm[0].reset();
                         }
                     }
                     else{
@@ -519,12 +528,50 @@
                     }
                 }
                 else{
-                    toastr.info('Please select an item.');
-                    indexView.$txtItemId.focus();
+
+                    if(self.checkSearchOption()){
+                        toastr.info('Please select an item.');
+                    }
+                    else{
+                        if(indexView.$txtItemDescription.val()){
+                            toastr.info('Item not found. Please select another item.');
+                        }
+                        else{
+                            toastr.info('Please select an item.');
+                        }
+                    }
+
+                    addItemView.txtFocus();
                 }
             });
 
             return this;
+        },
+
+        checkSearchOption: function(){
+            var self = this;
+
+            if(self.$txtSearchOption.hasClass("item_no")){
+                return true
+            }
+            else {
+                return false;
+            }
+        },
+
+        txtFocus: function(){
+            var self = this;
+
+            if(self.checkSearchOption()){
+                setTimeout(function(){
+                    indexView.$txtItemNo.focus(); 
+                },400);
+            }
+            else{
+                setTimeout(function(){
+                    indexView.$txtItemDescription.focus();
+                },400);
+            }
         }
     };
 
@@ -570,35 +617,32 @@
                             var orderedItems = [];
                             var orderInfos = [];
                             var emailSettings = [];
-                            var orderReferenceNO = chance.hash({length: 15, casing: 'upper'});
+                            var orderReferenceNo = chance.hash({length: 15, casing: 'upper'});
 
                             for(var i=0; i<ordersList.length; i++){
                                 orderDetails.push({
-                                    order_reference_no: orderReferenceNO,
+                                    order_reference_no: orderReferenceNo,
                                     item_id: ordersList[i][0],
                                     department_id: parseInt(indexView.$selectDepartment.val()),
                                     sub_department_id: parseInt(indexView.$selectSubDepartment.val()),
-                                    quantity: parseInt(ordersList[i][2]),
+                                    quantity: parseInt(ordersList[i][3]),
                                 })
                             }
 
                             for(var i=0; i<ordersList.length; i++){
                                 orderedItems.push({
-                                    item_id: ordersList[i][0],
-                                    item_description: ordersList[i][1],
-                                    item_price: ordersList[i][3],
-                                    item_total_price: ordersList[i][4],
-                                    quantity: parseInt(ordersList[i][2])
+                                    item_no: ordersList[i][1],
+                                    item_description: ordersList[i][2],
+                                    quantity: parseInt(ordersList[i][3])
                                 })
                             }
 
                             orderInfos.push({
-                                order_reference_no: orderReferenceNO,
-                                grand_total: indexView.$txtOrdersGrandTotal.val(),
+                                order_reference_no: orderReferenceNo,
                                 department: $("#select_department option:selected").text(),
                                 sub_department: $("#select_sub_department option:selected").text()
                             });                            
-                        
+                            
                             Alerts.showConfirm("", "Are you sure you want to complete this order? ", "Yes", "#3c8dbc", function (isConfirm){
                                 if (isConfirm) {
                                     model.post(orderDetails).done(function(orders){
@@ -617,16 +661,14 @@
                                             }
                                             
                                             model.sendEmail(orderedItems, orderInfos, emailSettings).done(function(orders){
-                                                Alerts.showSuccess("", "Order Completed!. <br>Your Order Reference # is <strong>"+ orderReferenceNO + "</strong>");
+                                                Alerts.showSuccess("", "Order Completed!. <br>Your Order Reference # is <strong>"+ orderReferenceNo + "</strong>");
                                                 overLayView.init().hide();
                                             });
                                         });
                                     });
                                 }
                                 else{
-                                    setTimeout(function(){
-                                        indexView.$txtItemId.focus() 
-                                    },400);
+                                    addItemView.txtFocus();
                                 }
                             }); 
                         }
@@ -635,11 +677,9 @@
                         }
                     }
                     else{
-                        Alerts.showWarning("", "You don't have orders. Please add your desire item to the orders list.", function(isConfirm){
+                        Alerts.showWarning("", "You don't have orders. Please add some item to the orders list.", function(isConfirm){
                             if(isConfirm){
-                                setTimeout(function(){
-                                    indexView.$txtItemId.focus() 
-                                }, 400);
+                                addItemView.txtFocus();
                             }
                         });                        
                     }
@@ -656,9 +696,9 @@
             this.$tableBody = $("#select_items_table tbody");
             this.$dtItems = this.$selectItemsTable.DataTable({
                 "columns": [
+                    { "sClass": "text-left font-bold", "sWidth": "0%" , visible: false},
                     { "sClass": "text-left font-bold", "sWidth": "30%" },
-                    { "sClass": "text-left font-bold", "sWidth": "70%" },
-                    { "sClass": "text-left font-bold", "sWidth": "0%" , visible: false}
+                    { "sClass": "text-left font-bold", "sWidth": "70%" }
                 ],
                 responsive: false,
                 "bAutoWidth": false,
@@ -683,8 +723,8 @@
                     for(var i=0; i<item.length; i++){
                         self.$dtItems.row.add([
                             item[i].id,
-                            item[i].description,
-                            item[i].price
+                            item[i].item_no,
+                            item[i].description
                         ]);
                         self.$dtItems.draw(false);
                     }
@@ -706,6 +746,7 @@
 
                 model.getItem(itemId).done(function (item){
                     indexView.$txtItemId.val(item.id);
+                    indexView.$txtItemNo.val(item.item_no);
                     indexView.$txtItemDescription.val(item.description);
                     self.$selectItemsModal.modal("hide");
                 });

@@ -24,8 +24,17 @@ class ItemsController extends Controller {
    	}
 
     public function item_get_by_description($description){
-        if(Item::where('description', $description)->get()){
-            return Item::where('description', $description)->get();
+        if(Item::where('description', $description)->first()){
+            return Item::where('description', $description)->first();
+        }
+        else{
+            return array('status'=> '0');
+        }
+    }
+
+    public function item_get_by_item_no($description){
+        if(Item::where('item_no', $description)->first()){
+            return Item::where('item_no', $description)->first();
         }
         else{
             return array('status'=> '0');

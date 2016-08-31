@@ -154,7 +154,12 @@ Route::get('/items/item/{id}', [
 
 Route::get('/items/item_get_by_description/{description}', [
 	'uses' => 'ItemsController@item_get_by_description', 
-	'as' => 'get_item_by_by_description'
+	'as' => 'get_item_by_description'
+]);
+
+Route::get('/items/item_get_by_item_no/{item_no}', [
+	'uses' => 'ItemsController@item_get_by_item_no', 
+	'as' => 'get_item_by_item_no'
 ]);
 
 
