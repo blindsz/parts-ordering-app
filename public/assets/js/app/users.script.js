@@ -348,7 +348,7 @@
                                         (updatedData.status === global.defaults.userStatus.ACTIVE) ? indexView.renderActiveMsg : indexView.renderInactiveMsg
                                     ], indexView.$dtApi.$("tr", { "filter": "applied" })[global.table.currentRowPos]);
 
-                                    Alerts.showSuccess("", "Succesfully update a user.");
+                                    Alerts.showSuccess("", "Succesfully updated a user info.");
                                     self.$updateUserModal.modal("hide");
                                 });
                             });

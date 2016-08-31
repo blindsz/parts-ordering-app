@@ -9,7 +9,7 @@ use App\Http\Requests;
 use App\Item;
 
 class ItemsController extends Controller {
-    //
+    
    	public function items_get(){
    		return Item::all();
    	}

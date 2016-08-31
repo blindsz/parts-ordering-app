@@ -2,76 +2,43 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
-use Validator;
+use Illuminate\Http\Request;
+
+use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Auth;
+use URL;
+use Redirect;
 
-class AuthController extends Controller
-{
-    /*
-    |--------------------------------------------------------------------------
-    | Registration & Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users, as well as the
-    | authentication of existing users. By default, this controller uses
-    | a simple trait to add these behaviors. Why don't you explore it?
-    |
-    */
-
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
-
-    /**
-     * Where to redirect users after login / registration.
-     *
-     * @var string
-     */
-    protected $username = 'username';
-    protected $status = 'status';
-    
-    protected $redirectTo = 'orders';
-
-    /**
-     * Create a new authentication controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+class AuthController extends Controller {
+	
+    public function index(){
+        if(Auth::check()){
+            return redirect('orders');
+        }
+        else{
+            return view('login.index');
+        }
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'username' => 'required|max:50'
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
-        ]);
+    public function login(Request $request){
+
+        $userdata = array(
+            'username' => $request->input('username'),
+            'password' => $request->input('password'),
+            'status' => 1
+        );
+
+        if (Auth::attempt($userdata)) {
+            return Redirect::intended('orders');
+        } 
+        else {   
+            return array('status'=> 0);
+        }
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return User
-     */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'username' => $data['username']
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+    public function logout(Request $request){
+        Auth::logout();
+        return redirect('/');
     }
 }

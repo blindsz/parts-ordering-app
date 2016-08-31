@@ -10,7 +10,7 @@ use App\SubDepartment;
 use Auth;
 
 class SubDepartmentsController extends Controller {
-
+    
     public function index() {
         if(Auth::check()){
             return view('sub-departments.index');
