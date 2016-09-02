@@ -459,36 +459,6 @@
                 indexView.$txtItemNo.easyAutocomplete(optionsTxtItemNo);
                 indexView.$txtItemDescription.easyAutocomplete(optionsTxtItemDescription);
             });
-    
-            indexView.$txtItemNo.focusout(function() {
-                model.getItemByItemNo(indexView.$txtItemNo.val()).done(function(item){
-                    if(item.status !== undefined){
-                        indexView.$txtItemDescription.val('');
-                        indexView.$txtItemId.val('');
-                    }
-                    else{
-                        indexView.$txtItemId.val(item.id);
-                        indexView.$txtItemNo.val(item.item_no);
-                        indexView.$txtItemDescription.val(item.description);
-                        indexView.$txtItemQuantity.focus();
-                    }
-                });
-            });
-
-            indexView.$txtItemDescription.focusout(function() {
-                model.getItemByDescription(indexView.$txtItemDescription.val()).done(function(item){
-                    if(item.status !== undefined){
-                        indexView.$txtItemId.val('');
-                        indexView.$txtItemNo.val('');
-                    }
-                    else{
-                        indexView.$txtItemId.val(item.id);
-                        indexView.$txtItemNo.val(item.item_no);
-                        indexView.$txtItemDescription.val(item.description);
-                        indexView.$txtItemQuantity.focus();
-                    }
-                });
-            });
 
             this.$btnSearchOption.click(function (){
                 if(self.checkSearchOption()){
@@ -507,66 +477,62 @@
                 var itemId = indexView.$txtItemId.val();
                 var itemNo = indexView.$txtItemNo.val();
                 var quantity = indexView.$txtItemQuantity.val();
+                var description = indexView.$txtItemDescription.val();
+                var searchOption = (self.checkSearchOption() === true) ? "itemId" : "description";
+                var searchQuery = (self.checkSearchOption() === true) ? model.getItemByItemNo(itemNo) : model.getItemByDescription(description);
 
-                if(itemNo){
+                if(searchOption){
                     if(quantity){
-                        if(itemId){
-                            if(quantity >= 1){
-                                model.getItem(itemId).done(function (item){
-                                    if(item.status == undefined){
-                                        var itemExistInTheList = false;
-                                        var ordersList = [];
-                                        var orders = indexView.$dtOrders.rows().data();
+                        if(quantity >= 1){
+                            searchQuery.done(function (item){
+                                if(item.status == undefined){
+                                    var itemExistInTheList = false;
+                                    var ordersList = [];
+                                    var orders = indexView.$dtOrders.rows().data();
 
-                                        for(var i=0; i<orders.length; i++){
-                                            if(indexView.$dtOrders.row(i).data()[0] == item.id){
-                                                ordersList = indexView.$dtOrders.row(i);
-                                                itemExistInTheList = true;
-                                                break;
-                                            }
+                                    for(var i=0; i<orders.length; i++){
+                                        if(indexView.$dtOrders.row(i).data()[0] == item.id){
+                                            ordersList = indexView.$dtOrders.row(i);
+                                            itemExistInTheList = true;
+                                            break;
                                         }
+                                    }
 
-                                        if(itemExistInTheList){
-                                            quantity = parseInt(quantity) + parseInt(ordersList.data()[3])
-                                            ordersList.data([
-                                                item.id,
-                                                item.item_no,
-                                                item.description,
-                                                numeral(quantity).format("0"),
-                                                indexView.$renderBtnDelete
-                                            ]);
-                                            indexView.$dtOrders.draw(false);
-                                        }
-                                        else{
-                                            indexView.$dtOrders.row.add([
-                                                item.id,
-                                                item.item_no,
-                                                item.description,
-                                                numeral(quantity).format("0"),
-                                                indexView.$renderBtnDelete
-                                            ]);
-                                            indexView.$dtOrders.draw(false);
-                                        }
-
-                                        self.$chooseItemForm[0].reset();
-                                        addItemView.txtFocus();
+                                    if(itemExistInTheList){
+                                        quantity = parseInt(quantity) + parseInt(ordersList.data()[3])
+                                        ordersList.data([
+                                            item.id,
+                                            item.item_no,
+                                            item.description,
+                                            numeral(quantity).format("0"),
+                                            indexView.$renderBtnDelete
+                                        ]);
+                                        indexView.$dtOrders.draw(false);
                                     }
                                     else{
-                                        toastr.info('Item not found. Please select another item.');
-                                        addItemView.txtFocus();
-                                        global.DOM.$chooseItemForm[0].reset();
+                                        indexView.$dtOrders.row.add([
+                                            item.id,
+                                            item.item_no,
+                                            item.description,
+                                            numeral(quantity).format("0"),
+                                            indexView.$renderBtnDelete
+                                        ]);
+                                        indexView.$dtOrders.draw(false);
                                     }
-                                }); 
-                            }
-                            else{
-                                toastr.info('Please enter a valid quantity.');
-                                indexView.$txtItemQuantity.focus();
-                            }
+
+                                    self.$chooseItemForm[0].reset();
+                                    addItemView.txtFocus();
+                                }
+                                else{
+                                    toastr.info('Item not found. Please select another item.');
+                                    addItemView.txtFocus();
+                                    global.DOM.$chooseItemForm[0].reset();
+                                }
+                            }); 
                         }
                         else{
-                            toastr.info('Item not found. Please select another item.');
-                            addItemView.txtFocus();
-                            global.DOM.$chooseItemForm[0].reset();
+                            toastr.info('Please enter a valid quantity.');
+                            indexView.$txtItemQuantity.focus();
                         }
                     }
                     else{
@@ -575,19 +541,7 @@
                     }
                 }
                 else{
-
-                    if(self.checkSearchOption()){
-                        toastr.info('Please select an item.');
-                    }
-                    else{
-                        if(indexView.$txtItemDescription.val()){
-                            toastr.info('Item not found. Please select another item.');
-                        }
-                        else{
-                            toastr.info('Please select an item.');
-                        }
-                    }
-
+                    toastr.info('Please select an item.');
                     addItemView.txtFocus();
                 }
             });
