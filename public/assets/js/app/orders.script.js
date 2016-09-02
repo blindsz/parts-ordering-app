@@ -465,11 +465,13 @@
                     self.$txtSearchOption.removeClass("item_no").addClass("item_description").text("Description");
                     indexView.$txtItemNo.attr("disabled","disabled");
                     indexView.$txtItemDescription.removeAttr("disabled").focus();
+                    self.$chooseItemForm[0].reset();
                 }
                 else{
                     self.$txtSearchOption.removeClass("item_description").addClass("item_no").text("Item No");
                     indexView.$txtItemDescription.attr("disabled","disabled");
                     indexView.$txtItemNo.removeAttr("disabled").focus();
+                    self.$chooseItemForm[0].reset();
                 }
             });
 
@@ -478,7 +480,7 @@
                 var itemNo = indexView.$txtItemNo.val();
                 var quantity = indexView.$txtItemQuantity.val();
                 var description = indexView.$txtItemDescription.val();
-                var searchOption = (self.checkSearchOption() === true) ? "itemId" : "description";
+                var searchOption = (self.checkSearchOption() === true) ? itemNo : description;
                 var searchQuery = (self.checkSearchOption() === true) ? model.getItemByItemNo(itemNo) : model.getItemByDescription(description);
 
                 if(searchOption){
@@ -526,7 +528,7 @@
                                 else{
                                     toastr.info('Item not found. Please select another item.');
                                     addItemView.txtFocus();
-                                    global.DOM.$chooseItemForm[0].reset();
+                                    self.$chooseItemForm[0].reset();
                                 }
                             }); 
                         }
@@ -718,7 +720,14 @@
             var self = this;
 
             self.$selectItemsModal.on('hide.bs.modal', function () {
-                addItemView.txtFocus();
+                if(!global.DOM.$txtItemNo.val()){
+                    addItemView.txtFocus();
+                }
+                else{
+                    setTimeout(function(){
+                        indexView.$txtItemQuantity.focus();
+                    }, 1000);
+                }
             });
 
             this.$btnChooseItems.click(function (){
